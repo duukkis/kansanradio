@@ -14,6 +14,10 @@ function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
 }
 
 $uppers = ["etunimi", "sukunimi", "paikannimi", "nimi"];
+// what voikko thinks is paikannimi but is not
+$notuppers = ["osta", "päivän", "koskien", "ostaa"];
+// what voikko thinks is not nimi but is
+$defuppers = ["kansanradio"];
 $pilkku = ["koska", "että", "mutta"];
 
 function isYhdyssana($word, $next): array
@@ -21,6 +25,7 @@ function isYhdyssana($word, $next): array
     $yhdyssanat = [
         "asuin" => ["paikalla", ["TRUE"]],
         "huomenta" => ["päivää", ["TRUE"]],
+        "hinnan" => ["nousu", ["TRUE"]],
         "itä" => ["suome", ["DOUBLE-UPPER", "DASH"]],
         "jatko" => ["hakemus", ["TRUE"]],
         "kansan" => ["radio", ["UPPER", "TRUE"]],
@@ -32,11 +37,13 @@ function isYhdyssana($word, $next): array
         "piha" => ["kasvillisuu", ["TRUE"]],
         "s" => ["market", ["UPPER", "DASH"]],
         "sian" => ["läski", ["TRUE"]],
+        "sotilas" => ["tehtäväs", ["TRUE"]],
         "terassi" => ["kesä", ["TRUE"]],
         "tosi" => ["koi", ["TRUE"]],
         "tuhka" => ["kupis", ["TRUE"]],
         "tupakan" => ["tump", ["TRUE"]],
         "tä" => ["ynnä", ["TRUE"]],
+        "yli" => ["mainostettu", ["TRUE"]],
         "varsinais" => ["suome", ["DOUBLE-UPPER", "DASH"]],
         "whats" => ["app", ["DOUBLE-UPPER", "TRUE"]],
     ];
@@ -59,17 +66,18 @@ for ($i = 0;$i < count($p);$i++) {
     $line = $p[$i];
     $ps = explode(" ", $line);
     $word = $ps[0];
+    $trimmedWord = trim($word, ".,?!");
     // get next word for possible pilkku and for compound word
     if (isset($p[$i + 1])) {
         $next = explode(" ", $p[$i + 1])[0];
     }
 
     $isYhdyssana = isYhdyssana(
-        mb_strtolower(trim($word, ".,?!")),
+        mb_strtolower($trimmedWord),
         mb_strtolower(trim($next, ".,?!"))
     );
     if (!empty($isYhdyssana)) {
-        $word = trim($word, ".,?! ");
+        $word = $trimmedWord;
         if (in_array("UPPER", $isYhdyssana)) {
             $word = mb_ucfirst($word);
         } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
@@ -85,7 +93,7 @@ for ($i = 0;$i < count($p);$i++) {
         }
     }
     // capitals
-    if (isset($ps[2]) && in_array($ps[2], $uppers)) {
+    if ((isset($ps[2]) && in_array($ps[2], $uppers) && !in_array($trimmedWord, $notuppers)) || in_array($trimmedWord, $defuppers)) {
         $word = mb_ucfirst($word, "UTF-8", true);
     }
     print $word;
