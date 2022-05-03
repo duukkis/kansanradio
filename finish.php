@@ -15,36 +15,55 @@ function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
 
 $uppers = ["etunimi", "sukunimi", "paikannimi", "nimi"];
 // what voikko thinks is paikannimi but is not
-$notuppers = ["osta", "päivän", "koskien", "ostaa"];
+$notuppers = ["osta", "päivän", "koskien", "ostaa", "illalla", "päivä", "maissa", "auring", 
+              "aurinko", "maahan", "nurmelle", "puolin", "maata", "maassa", "auton", "äänistä",
+              "asukas", "takasin", "päivää"
+             ];
 // what voikko thinks is not nimi but is
-$defuppers = ["kansanradio"];
+$defuppers = ["kansanradio", "ruotsi"];
 $pilkku = ["koska", "että", "mutta"];
 
 function isYhdyssana($word, $next): array
 {
     $yhdyssanat = [
         "asuin" => ["paikalla", ["TRUE"]],
+        "etelä" => ["helsin", ["DOUBLE-UPPER", "DASH"]],
         "huomenta" => ["päivää", ["TRUE"]],
         "hinnan" => ["nousu", ["TRUE"]],
         "itä" => ["suome", ["DOUBLE-UPPER", "DASH"]],
         "jatko" => ["hakemus", ["TRUE"]],
+        "junan" => ["tuoma", ["TRUE"]],
+        "kansa" => ["radio", ["UPPER", "TRUE"]],
         "kansan" => ["radio", ["UPPER", "TRUE"]],
+        "kansan" => ["ratio", ["UPPER", "TRUE"]],
+        "karamelli" => ["paper", ["UPPER", "TRUE"]],
+        "kimppa" => ["porukk", ["TRUE"]],
         "koiran" => ["omistaja", ["TRUE"]],
+        "laku" => ["jäätelö", ["TRUE"]],
         "lähi" => ["kuvi", ["TRUE"]],
         "metalli" => ["kanne", ["TRUE"]],
         "perunamuusi" => ["jauhe", ["TRUE"]],
         "perus" => ["hoitaj", ["TRUE"]],
         "piha" => ["kasvillisuu", ["TRUE"]],
+        "pizza" => ["pala", ["TRUE"]],
         "s" => ["market", ["UPPER", "DASH"]],
         "sian" => ["läski", ["TRUE"]],
+        "sivusta" => ["katsoja", ["TRUE"]],
         "sotilas" => ["tehtäväs", ["TRUE"]],
+        "säästö" => ["vinkk", ["TRUE"]],
+        "tammer" => ["kosk", ["UPPER", "TRUE"]],
+        "tausta" => ["ään", ["TRUE"]],
+        "televisio" => ["ohjelm", ["DASH", "TRUE"]],
         "terassi" => ["kesä", ["TRUE"]],
+        "tissi" => ["vako", ["TRUE"]],
         "tosi" => ["koi", ["TRUE"]],
         "tuhka" => ["kupis", ["TRUE"]],
         "tupakan" => ["tump", ["TRUE"]],
         "tä" => ["ynnä", ["TRUE"]],
         "yli" => ["mainostettu", ["TRUE"]],
         "varsinais" => ["suome", ["DOUBLE-UPPER", "DASH"]],
+        "vappu" => ["pallo", ["TRUE"]],
+        "vappu" => ["pullo", ["TRUE"]],
         "whats" => ["app", ["DOUBLE-UPPER", "TRUE"]],
     ];
 
