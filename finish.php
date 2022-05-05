@@ -1,7 +1,5 @@
 <?php
 
-$c = file_get_contents("./data/log");
-
 function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
     $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
     if ($lower_str_end) {
@@ -34,8 +32,10 @@ function isYhdyssana($word, $next): array
         "jatko" => ["hakemus", ["TRUE"]],
         "junan" => ["tuoma", ["TRUE"]],
         "kansa" => ["radio", ["UPPER", "TRUE"]],
-        "kansan" => ["radio", ["UPPER", "TRUE"]],
-        "kansan" => ["ratio", ["UPPER", "TRUE"]],
+        "kansan" => [
+            "radio", ["UPPER", "TRUE"],
+            "ratio", ["UPPER", "TRUE"]
+        ],
         "karamelli" => ["paper", ["UPPER", "TRUE"]],
         "kimppa" => ["porukk", ["TRUE"]],
         "koiran" => ["omistaja", ["TRUE"]],
@@ -62,13 +62,19 @@ function isYhdyssana($word, $next): array
         "tä" => ["ynnä", ["TRUE"]],
         "yli" => ["mainostettu", ["TRUE"]],
         "varsinais" => ["suome", ["DOUBLE-UPPER", "DASH"]],
-        "vappu" => ["pallo", ["TRUE"]],
-        "vappu" => ["pullo", ["TRUE"]],
+        "vappu" => [
+            "pallo", ["TRUE"],
+            "pullo", ["TRUE"]
+        ],
         "whats" => ["app", ["DOUBLE-UPPER", "TRUE"]],
     ];
 
-    if (isset($yhdyssanat[$word]) && strpos($next, $yhdyssanat[$word][0]) === 0) {
-        return $yhdyssanat[$word][1];
+    if (isset($yhdyssanat[$word])) {
+        foreach ($yhdyssanat[$word] as $key => $value) {
+            if (strpos($next, $key) === 0) {
+                return $value;
+            }
+        }
     }
     // sijapääte fix
     if (in_array($next, ["sta", "lle"])) {
@@ -77,7 +83,13 @@ function isYhdyssana($word, $next): array
     return [];
 }
 
-// start action
+// ------------------------------- start action data looks like this
+// Min<C3><A4> =pppp nimisana
+// olen =pppp teonsana
+// johanna =ipppppp etunimi
+// <C3><A4>stman
+// ja =pp sidesana
+$c = file_get_contents("./data/log");
 $p = explode("\n", $c);
 $next = null;
 
