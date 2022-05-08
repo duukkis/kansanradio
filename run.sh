@@ -8,6 +8,10 @@ yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode --showmetadata > ./
 yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode -o ./data/latest.mp3
 # Convert to wav and remove the 16s intro
 ffmpeg -i ./data/latest.mp3 -ss 16 -ar 16000 -ac 1 ./data/latest.wav
+rm ./data/latest.mp3
+ffmpeg -i ./data/latest.wav -c copy ./data/fixed.wav
+mv ./data/fixed.wav ./data/latest.wav
+
 # Sound to text from azure
 cd java
 java -Dkey=$AZURE_KEY -Dzone=$AZURE_ZONE -Dfile=/home/pi/bots/kansanradio/data/latest.wav -jar ./target/SpeechSDKDemo-0.0.1-SNAPSHOT-jar-with-dependencies.jar > /home/pi/bots/kansanradio/data/result.txt
@@ -20,5 +24,4 @@ php finish.php > ./data/final.txt
 # todo copy by date the middle results
 
 # clean up files
-rm ./data/latest.mp3
 rm ./data/latest.wav
