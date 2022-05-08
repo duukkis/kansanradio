@@ -13,60 +13,81 @@ function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
 
 $uppers = ["etunimi", "sukunimi", "paikannimi", "nimi"];
 // what voikko thinks is paikannimi but is not
-$notuppers = ["osta", "päivän", "koskien", "ostaa", "illalla", "päivä", "maissa", "auring", 
+$notuppers = ["osta", "koskien", "ostaa", "illalla", "maissa", "auring", 
               "aurinko", "maahan", "nurmelle", "puolin", "maata", "maassa", "auton", "äänistä",
-              "asukas", "takasin", "päivää"
+              "asukas", "takasin", "monien", "yleensä", "peruna", 
              ];
+// .... keep ^ for a while, start using this
+$basenotupper = ["Päivi", "Päivä", "Ilma", "Sikiö", "Helli", "Valta", "Pello", "Osta", "Säde", 
+                ];
+
+// todo
+// lukusana -luvulla >> 1990-luvulla, 2000 luku >> 2000-luku
+
 // what voikko thinks is not nimi but is
-$defuppers = ["kansanradio", "ruotsi"];
+$defuppers = ["kansanradio", "ruotsi", "turku", "skanska", "yit", ];
 $pilkku = ["koska", "että", "mutta"];
 
 function isYhdyssana($word, $next): array
 {
     $yhdyssanat = [
-        "asuin" => ["paikalla", ["TRUE"]],
-        "etelä" => ["helsin", ["DOUBLE-UPPER", "DASH"]],
-        "huomenta" => ["päivää", ["TRUE"]],
-        "hinnan" => ["nousu", ["TRUE"]],
-        "itä" => ["suome", ["DOUBLE-UPPER", "DASH"]],
-        "jatko" => ["hakemus", ["TRUE"]],
-        "junan" => ["tuoma", ["TRUE"]],
-        "kansa" => ["radio", ["UPPER", "TRUE"]],
+        "ajo" => ["halli" => ["TRUE"]],
+        "asuin" => ["paikalla" => ["TRUE"]],
+        "atomi" => ["voima" => ["TRUE"]],
+        "etelä" => ["helsin" => ["DOUBLE-UPPER", "DASH"]],
+        "huomenta" => ["päivää" => ["TRUE"]],
+        "hinnan" => ["nousu" => ["TRUE"]],
+        "hoitaja" => ["pula" => ["TRUE"]],
+        "itä" => ["suome" => ["DOUBLE-UPPER", "DASH"]],
+        "jatko" => ["hakemus" => ["TRUE"]],
+        "junan" => ["tuoma" => ["TRUE"]],
+        "kansa" => ["radio" => ["UPPER", "TRUE"]],
         "kansan" => [
-            "radio", ["UPPER", "TRUE"],
-            "ratio", ["UPPER", "TRUE"]
+            "radio" => ["UPPER", "TRUE"],
+            "ratio" => ["UPPER", "TRUE"]
         ],
-        "karamelli" => ["paper", ["UPPER", "TRUE"]],
-        "kimppa" => ["porukk", ["TRUE"]],
-        "koiran" => ["omistaja", ["TRUE"]],
-        "laku" => ["jäätelö", ["TRUE"]],
-        "lähi" => ["kuvi", ["TRUE"]],
-        "metalli" => ["kanne", ["TRUE"]],
-        "perunamuusi" => ["jauhe", ["TRUE"]],
-        "perus" => ["hoitaj", ["TRUE"]],
-        "piha" => ["kasvillisuu", ["TRUE"]],
-        "pizza" => ["pala", ["TRUE"]],
-        "s" => ["market", ["UPPER", "DASH"]],
-        "sian" => ["läski", ["TRUE"]],
-        "sivusta" => ["katsoja", ["TRUE"]],
-        "sotilas" => ["tehtäväs", ["TRUE"]],
-        "säästö" => ["vinkk", ["TRUE"]],
-        "tammer" => ["kosk", ["UPPER", "TRUE"]],
-        "tausta" => ["ään", ["TRUE"]],
-        "televisio" => ["ohjelm", ["DASH", "TRUE"]],
-        "terassi" => ["kesä", ["TRUE"]],
-        "tissi" => ["vako", ["TRUE"]],
-        "tosi" => ["koi", ["TRUE"]],
-        "tuhka" => ["kupis", ["TRUE"]],
-        "tupakan" => ["tump", ["TRUE"]],
-        "tä" => ["ynnä", ["TRUE"]],
-        "yli" => ["mainostettu", ["TRUE"]],
-        "varsinais" => ["suome", ["DOUBLE-UPPER", "DASH"]],
+        "karamelli" => ["paper" => ["UPPER", "TRUE"]],
+        "kimppa" => ["porukk" => ["TRUE"]],
+        "koiran" => ["omistaja" => ["TRUE"]],
+        "korotus" => ["vaatimu" => ["TRUE"]],
+        "korpi" => [
+          "seud" => ["TRUE"],
+          "seut" => ["TRUE"]
+        ],
+        "kunta" => ["ala" => ["DASH", "TRUE"]],
+        "laku" => ["jäätelö" => ["TRUE"]],
+        "lähi" => ["kuvi" => ["TRUE"]],
+        "metalli" => ["kanne" => ["TRUE"]],
+        "perunamuusi" => ["jauhe" => ["TRUE"]],
+        "peruna" => ["pel" => ["TRUE"]],
+        "perus" => ["hoitaj" => ["TRUE"]],
+        "piha" => ["kasvillisuu" => ["TRUE"]],
+        "pizza" => ["pala" => ["TRUE"]],
+        "pohjois" => ["pohjanmaa" => ["DOUBLE-UPPER", "DASH"]],
+        "s" => ["market" => ["UPPER", "DASH"]],
+        "sian" => ["läski" => ["TRUE"]],
+        "sivusta" => ["katsoja" => ["TRUE"]],
+        "sota" => ["alu" => ["DASH", "TRUE"]],
+        "sotilas" => ["tehtäväs" => ["TRUE"]],
+        "säästö" => ["vinkk" => ["TRUE"]],
+        "tammer" => ["kosk" => ["UPPER", "TRUE"]],
+        "tausta" => ["ään" => ["TRUE"]],
+        "televisio" => ["ohjelm" => ["DASH", "TRUE"]],
+        "terassi" => ["kesä" => ["TRUE"]],
+        "tissi" => ["vako" => ["TRUE"]],
+        "tosi" => ["koi" => ["TRUE"]],
+        "tuhka" => ["kupis" => ["TRUE"]],
+        "tupakan" => ["tump" => ["TRUE"]],
+        "tyhjän" => ["toimitta" => ["TRUE"]],
+        "tä" => ["ynnä" => ["TRUE"]],
+        "yle" => ["areena" => ["DOUBLE-UPPER", "SPACE"]],
+        "yli" => ["mainostettu" => ["TRUE"]],
+        "varsinais" => ["suome" => ["DOUBLE-UPPER", "DASH"]],
         "vappu" => [
-            "pallo", ["TRUE"],
-            "pullo", ["TRUE"]
+            "pallo" => ["TRUE"],
+            "pullo" => ["TRUE"]
         ],
-        "whats" => ["app", ["DOUBLE-UPPER", "TRUE"]],
+        "whats" => ["app" => ["DOUBLE-UPPER", "TRUE"]],
     ];
 
     if (isset($yhdyssanat[$word])) {
@@ -77,7 +98,7 @@ function isYhdyssana($word, $next): array
         }
     }
     // sijapääte fix
-    if (in_array($next, ["sta", "lle"])) {
+    if (in_array($next, ["sta", "lle", "kin", "loinen", "uksia", ])) {
         return ["TRUE"];
     }
     return [];
@@ -97,6 +118,7 @@ for ($i = 0;$i < count($p);$i++) {
     $line = $p[$i];
     $ps = explode(" ", $line);
     $word = $ps[0];
+    $baseform = $ps[1];
     $trimmedWord = trim($word, ".,?!");
     // get next word for possible pilkku and for compound word
     if (isset($p[$i + 1])) {
@@ -118,13 +140,16 @@ for ($i = 0;$i < count($p);$i++) {
         if (in_array("DASH", $isYhdyssana)) {
             $word = $word . "-" . $next;
             $i++; // skip next
-        } else if (in_array("TRUE", $isYhdyssana)) {
+        } elseif (in_array("TRUE", $isYhdyssana)) {
             $word = $word . $next;
+            $i++; // skip next
+        } elseif (in_array("SPACE", $isYhdyssana)) {
+            $word = $word . " " . $next;
             $i++; // skip next
         }
     }
     // capitals
-    if ((isset($ps[2]) && in_array($ps[2], $uppers) && !in_array($trimmedWord, $notuppers)) || in_array($trimmedWord, $defuppers)) {
+    if ((isset($ps[2]) && in_array($ps[2], $uppers) && !in_array($trimmedWord, $notuppers) && !in_array($baseform, $basenotupper)) || in_array($baseform, $defuppers) || in_array($trimmedWord, $defuppers)) {
         $word = mb_ucfirst($word, "UTF-8", true);
     }
     print $word;
