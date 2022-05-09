@@ -118,7 +118,7 @@ for ($i = 0;$i < count($p);$i++) {
     $line = $p[$i];
     $ps = explode(" ", $line);
     $word = $ps[0];
-    $baseform = $ps[1];
+    $baseform = isset($ps[1]) ? $ps[1] : null;
     $trimmedWord = trim($word, ".,?!");
     // get next word for possible pilkku and for compound word
     if (isset($p[$i + 1])) {
