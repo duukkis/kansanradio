@@ -1,0 +1,17 @@
+{
+    "name": "kansan/radio",
+    "require": {
+        "php": "8.*"
+    },
+    "authors": [
+        {
+            "name": "duukkis",
+            "email": "duukkis@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kansanradio\\": "Kansanradio/"
+        }
+    }
+}
