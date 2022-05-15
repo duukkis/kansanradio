@@ -110091,7 +110091,6 @@ omatalo
 omatekemä
 omatesti
 omatila
-omatoimi
 omatoimiaika
 omatoimiasiointi
 omatoimiaukioloaika
@@ -206225,6 +206224,7 @@ lakonaikainen
 lakonalainen
 lakonjälkeinen
 lakritsipohjainen
+lakritsapiippu
 laktoosivaivainen
 lakujalkainen
 lamellihirsinen
@@ -219771,4 +219771,3 @@ turva-aikuinen
 ukrainalais-venäläinen
 unkarilais-suomalainen
 uppo-outo
-

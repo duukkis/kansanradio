@@ -4,6 +4,7 @@ require("./vendor/autoload.php");
 use Kansanradio\CompoundWord;
 use Kansanradio\Word;
 
+
 function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
     $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
     if ($lower_str_end) {
@@ -16,7 +17,7 @@ function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
 }
 
 $pilkku = ["koska", "että", "mutta"];
-
+$baseFormArray = CompoundWord::buildCompoundWordArray("./resources/yhdyssanat.txt");
 
 // ------------------------------- start action data looks like this
 // Min<C3><A4> =pppp nimisana
@@ -46,9 +47,7 @@ for ($i = 0;$i < count($p);$i++) {
         $next = new Word($nextW, $nextB, $nextC);
     }
   
-    $compound = new CompoundWord($word, $next);
-  
-    $isYhdyssana = $compound->isCompound();
+    $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
     
     if (!empty($isYhdyssana)) {
         if (in_array("UPPER", $isYhdyssana)) {
@@ -57,6 +56,7 @@ for ($i = 0;$i < count($p);$i++) {
             $word->word = mb_ucfirst($word->word);
             $next->word = mb_ucfirst($next->word);
         }
+      
         if (in_array("DASH", $isYhdyssana)) {
             $word->word = $word->word . "-" . $next->word;
             $i++; // skip next
@@ -68,10 +68,14 @@ for ($i = 0;$i < count($p);$i++) {
             $i++; // skip next
         }
     }
+    if ($word->word == "SUOMI") {
+      $word->word = "Suomi";
+    }
     // capitals
     if ($word->isCapital()) {
         $word->word = mb_ucfirst($word->word, "UTF-8", true);
     }
+    
     print $word->word;
 
     $lastLetter = mb_substr($word->word, -1, 1);

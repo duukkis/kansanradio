@@ -1,14 +1,24 @@
 # kansanradio
 
+Python build
 ```
 pip3 install yle-dl
 pip3 install libvoikko
-cp .env_example .env
-sh run.sh
 ```
 
-running the java
+Java build
 ```
+cd java
 mvn clean package
-java -jar ./target/SpeechSDKDemo-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+```
+
+Php build
+```
+composer install
+```
+
+Running the code
+```
+cp .env_example .env
+bash run.sh
 ```
