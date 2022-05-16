@@ -4,18 +4,6 @@ require("./vendor/autoload.php");
 use Kansanradio\CompoundWord;
 use Kansanradio\Word;
 
-
-function mb_ucfirst($str, $encoding = "UTF-8", $lower_str_end = false) {
-    $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
-    if ($lower_str_end) {
-        $str_end = mb_strtolower(mb_substr($str, 1, mb_strlen($str, $encoding), $encoding), $encoding);
-    } else {
-        $str_end = mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
-    }
-    $str = $first_letter . $str_end;
-    return $str;
-}
-
 $pilkku = ["koska", "että", "mutta"];
 $baseFormArray = CompoundWord::buildCompoundWordArray("./resources/yhdyssanat.txt");
 
@@ -27,34 +15,32 @@ $baseFormArray = CompoundWord::buildCompoundWordArray("./resources/yhdyssanat.tx
 // ja =pp sidesana
 $c = file_get_contents("./data/log");
 $p = explode("\n", $c);
-$next = new Word("", "", "");
+$next = null;
 
-for ($i = 0;$i < count($p);$i++) {
-    $line = $p[$i];
+function buildWordFromLine($line): Word
+{
     $ps = explode(" ", $line);
     $sana = $ps[0];
     $baseform = isset($ps[1]) ? $ps[1] : null;
     $wClass = isset($ps[2]) ? $ps[2] : null;
-    $word = new Word($sana, $baseform, $wClass);
-  
-    $trimmedWord = $word->trimmed();
+    return new Word($sana, $baseform, $wClass);
+}
+
+for ($i = 0;$i < count($p);$i++) {
+    $word = buildWordFromLine($p[$i]);
     // get next word for possible pilkku and for compound word
     if (isset($p[$i + 1])) {
-        $nn = explode(" ", $p[$i + 1]);
-        $nextW = $nn[0];
-        $nextB = isset($nn[1]) ? $nn[1] : null;
-        $nextC = isset($nn[2]) ? $nn[2] : null;
-        $next = new Word($nextW, $nextB, $nextC);
+        $next = buildWordFromLine($p[$i + 1]);
     }
   
     $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
     
     if (!empty($isYhdyssana)) {
         if (in_array("UPPER", $isYhdyssana)) {
-            $word->word = mb_ucfirst($word->word);
+            $word->word = $word->mbUcfirst();
         } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
-            $word->word = mb_ucfirst($word->word);
-            $next->word = mb_ucfirst($next->word);
+            $word->word = $word->mbUcfirst();
+            $next->word = $next->mbUcfirst();
         }
       
         if (in_array("DASH", $isYhdyssana)) {
@@ -68,12 +54,9 @@ for ($i = 0;$i < count($p);$i++) {
             $i++; // skip next
         }
     }
-    if ($word->word == "SUOMI") {
-      $word->word = "Suomi";
-    }
-    // capitals
+    // capital
     if ($word->isCapital()) {
-        $word->word = mb_ucfirst($word->word, "UTF-8", true);
+        $word->word = $word->mbUcfirst();
     }
     
     print $word->word;
@@ -82,7 +65,7 @@ for ($i = 0;$i < count($p);$i++) {
 
     if (in_array($lastLetter, [".", "?"])) {
         print(PHP_EOL);
-    } else if ($lastLetter !== "," && in_array($next->word, $pilkku, true)) {
+    } else if ($lastLetter !== "," && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
         print(", ");
     } else {
         print(" ");

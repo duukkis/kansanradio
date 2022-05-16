@@ -78,8 +78,11 @@ class CompoundWord
       "kanta" => ["häme" => ["DOUBLE-UPPER", "DASH"]],
     ];
   
-  public static function isCompound(Word $word, Word $other, array $baseforms): array
+  public static function isCompound(Word $word, $other, array $baseforms): array
   {
+    if (is_null($other)) {
+      return [];
+    }
     $word1 = mb_strtolower($word->trimmed());
     $word2 = mb_strtolower($other->trimmed());
     

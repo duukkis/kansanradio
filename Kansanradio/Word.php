@@ -49,4 +49,16 @@ class Word
       || in_array($this->baseform, self::DEFUPPERS, true)
       ;
   }
+  
+  public function mbUcfirst(string $encoding = "UTF-8", bool $lower_str_end = true): string
+  {
+    $str = $this->word;
+    $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
+    if ($lower_str_end) {
+        $str_end = mb_strtolower(mb_substr($str, 1, mb_strlen($str, $encoding), $encoding), $encoding);
+    } else {
+        $str_end = mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+    }
+    return $first_letter . $str_end;
+  }
 }
