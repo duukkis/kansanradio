@@ -101,6 +101,9 @@ class CompoundWord
     if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias"]) && $word->wClass == "lukusana") {
         return ["DASH"];
     }
+    if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
+        return ["TRUE"];
+    }
     
     if (!empty($word->baseform) && !empty($other->baseform)) {
       if (in_array($word->word.$other->baseform, $baseforms)) {

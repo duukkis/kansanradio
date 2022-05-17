@@ -44,6 +44,7 @@ public class SpeechRecognitionSamples {
         // and service region (e.g., "westus").
         SpeechConfig config = SpeechConfig.fromSubscription(key, zone);
         config.setSpeechRecognitionLanguage("fi-FI");
+        config.setProfanity(ProfanityOption.Raw);
 
         // Create an object that parses the WAV file and implements PullAudioInputStreamCallback to read audio data from the file.
         // Replace with your own audio file name.
@@ -58,10 +59,6 @@ public class SpeechRecognitionSamples {
         // Creates a speech recognizer using audio stream input.
         SpeechRecognizer recognizer = new SpeechRecognizer(config, audioInput);
         {
-            // Subscribes to events.
-//            recognizer.recognizing.addEventListener((s, e) -> {
-//                System.out.println("RECOGNIZING: Text=" + e.getResult().getText());
-//            });
 
             recognizer.recognized.addEventListener((s, e) -> {
                 if (e.getResult().getReason() == ResultReason.RecognizedSpeech) {
