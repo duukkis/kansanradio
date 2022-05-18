@@ -4,7 +4,7 @@ namespace Kansanradio;
 
 class CompoundWord
 {
-  const COMPOUNDWORDS = [
+    const COMPOUNDWORDS = [
       "ajo" => ["halli" => ["TRUE"]],
       "asuin" => ["paikalla" => ["TRUE"]],
       "atomi" => ["voima" => ["TRUE"]],
@@ -78,53 +78,57 @@ class CompoundWord
       "kanta" => ["häme" => ["DOUBLE-UPPER", "DASH"]],
     ];
   
-  public static function isCompound(Word $word, $other, array $baseforms): array
-  {
-    if (is_null($other)) {
-      return [];
-    }
-    $word1 = mb_strtolower($word->trimmed());
-    $word2 = mb_strtolower($other->trimmed());
+    public static function isCompound(Word $word, $other, array $baseforms): array
+    {
+        if (is_null($other)) {
+            return [];
+        }
+        $word1 = mb_strtolower($word->trimmed());
+        $word2 = mb_strtolower($other->trimmed());
     
-    if (isset(self::COMPOUNDWORDS[$word1])) {
-        foreach (self::COMPOUNDWORDS[$word1] as $key => $value) {
-            if (strpos($word2, $key) === 0) {
-                return $value;
+        if (isset(self::COMPOUNDWORDS[$word1])) {
+            foreach (self::COMPOUNDWORDS[$word1] as $key => $value) {
+                if (strpos($word2, $key) === 0) {
+                    return $value;
+                }
             }
         }
-    }
-    // sijapääte fix
-    if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", ])) {
-        return ["TRUE"];
-    }
+        // sijapääte fix
+        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", ])) {
+            return ["TRUE"];
+        }
     
-    if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias"]) && $word->wClass == "lukusana") {
-        return ["DASH"];
-    }
-    if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
-        return ["TRUE"];
-    }
+        if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias"]) && $word->wClass == "lukusana") {
+            return ["DASH"];
+        }
+        if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
+            return ["TRUE"];
+        }
     
-    if (!empty($word->baseform) && !empty($other->baseform)) {
-      if (in_array($word->word.$other->baseform, $baseforms)) {
-        return ["TRUE"];
-      } else if (in_array($word->word."-".$other->baseform, $baseforms)) {
-        return ["TRUE", "DASH"];
-      }
+        if (!empty($word->baseform) && !empty($other->baseform)) {
+            if (in_array($word->word.$other->baseform, $baseforms)) {
+                return ["TRUE"];
+            } else if (in_array($word->word."-".$other->baseform, $baseforms)) {
+                return ["TRUE", "DASH"];
+            }
+        }
+        return [];
     }
-    return [];
-  }
  
-  /**
-   * call this only once for performance
-   */
-  public static function buildCompoundWordArray(string $fileName): array
-  {
-      if (file_exists($fileName)) {
-        $c = file_get_contents($fileName);
-        $p = explode("\n", $c);
-        return $p;
-      }
-      return [];
-  }  
+    /**
+     * Call this only once for performance
+     *
+     * @param string $fileName -
+     *
+     * @return array
+     */
+    public static function buildCompoundWordArray(string $fileName): array
+    {
+        if (file_exists($fileName)) {
+            $c = file_get_contents($fileName);
+            $p = explode("\n", $c);
+            return $p;
+        }
+        return [];
+    }  
 }
