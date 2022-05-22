@@ -4,6 +4,12 @@ namespace Kansanradio;
 
 class CompoundWord
 {
+    const FIXUS = [
+      "kainalo" => ["Schauman" => "Kainalosauvan"],
+      "se" => ["lainen" => "sellainen"],
+      "roll" => ["alle" => "rouvalle"],
+    ];
+  
     const COMPOUNDWORDS = [
       "ajo" => ["halli" => ["TRUE"]],
       "asuin" => ["paikalla" => ["TRUE"]],
@@ -51,6 +57,9 @@ class CompoundWord
       ],
       "vei" => ["tikat" => ["TRUE"]],
       "äiti" => ["rukka" => ["TRUE"]],
+      // --------------------------------- eu:n, tv:ssä
+      "eu" => ["n" => ["COLON"]],
+      "tv" => ["ssä" => ["COLON"]],
       // --------------------------------- true but with a-a, o-o
       "kunta" => ["ala" => ["DASH", "TRUE"]],
       "sota" => ["alu" => ["DASH", "TRUE"]],
@@ -94,7 +103,7 @@ class CompoundWord
             }
         }
         // sijapääte fix
-        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", ])) {
+        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", "mme"])) {
             return ["TRUE"];
         }
     
@@ -106,13 +115,27 @@ class CompoundWord
         }
     
         if (!empty($word->baseform) && !empty($other->baseform)) {
-            if (in_array($word->word.$other->baseform, $baseforms)) {
+            if (in_array($word1.$other->baseform, $baseforms)) {
                 return ["TRUE"];
-            } else if (in_array($word->word."-".$other->baseform, $baseforms)) {
+            } else if (in_array($word1."-".$other->baseform, $baseforms)) {
                 return ["TRUE", "DASH"];
             }
         }
         return [];
+    }
+  
+    public static function azureFixes(Word $word, $other): ?string
+    {
+        if (is_null($other)) {
+            return null;
+        }
+        if (isset(self::FIXUS[$word->baseform][$other->baseform])) {
+            return self::FIXUS[$word->baseform][$other->baseform];
+        }
+        if (isset(self::FIXUS[$word->word][$other->baseform])) {
+            return self::FIXUS[$word->word][$other->baseform];
+        }
+        return null;
     }
  
     /**

@@ -12,23 +12,24 @@ class Word
     ];
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
-    "Aamu",
+    "Aamu", "Autto", 
     "Elo",
     "Hal", "Helli",
     "Ilma", "Ilta",
-    "Kallinen",
-    "Laina",
-    "Maa",
+    "Janna", // todo >> jännä
+    "Kallinen", "Koski", "Kaste",
+    "Laina", "Lahja", 
+    "Maa", "Mona", "Meri", 
     "Osta", "Oman",
     "Pello", "Pohja", "Päivi", "Päivä", 
-    "Ranta", "Riski",
+    "Ranta", "Riski", "Rinna",
     "Säde", "Sikiö",
     "Ukko", 
     "Valta",
 
     ];
     // what voikko thinks is not nimi but is (replace this with list)
-    const DEFUPPERS = ["kansanradio", "ruotsi", "turku", "skanska", "yit", "suomia", "venäjä", "ukraina", ];
+    const DEFUPPERS = ["kansanradio", "ruotsi", "turku", "skanska", "yit", "suomia", "venäjä", "ukraina", "ranska", ];
   
     public string $word = "";
     public ?string $baseform = null;
@@ -61,15 +62,25 @@ class Word
         || in_array($this->baseform, self::DEFUPPERS, true);
     }
   
-    public function mbUcfirst(string $encoding = "UTF-8", bool $lower_str_end = true): string
+    public function isFirstLetterCapital(): string
+    {
+        return ($this->word === $this->mbUcFirst());
+    }
+
+    public function mbUcfirst(bool $lower_str_end = true): string
     {
         $str = $this->word;
-        $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
+        $first_letter = mb_strtoupper(mb_substr($str, 0, 1, "UTF-8"), "UTF-8");
         if ($lower_str_end) {
-            $str_end = mb_strtolower(mb_substr($str, 1, mb_strlen($str, $encoding), $encoding), $encoding);
+            $str_end = mb_strtolower(mb_substr($str, 1, mb_strlen($str, "UTF-8"), "UTF-8"), "UTF-8");
         } else {
-            $str_end = mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+            $str_end = mb_substr($str, 1, mb_strlen($str, "UTF-8"), "UTF-8");
         }
         return $first_letter . $str_end;
+    }
+
+    public function mbStrLower(bool $lower_str_end = true): string
+    {
+        return mb_strtolower($this->word, "UTF-8");
     }
 }

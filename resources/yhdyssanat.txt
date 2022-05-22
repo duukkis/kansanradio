@@ -64272,7 +64272,6 @@ kiitoskahvi
 kiitoskampanja
 kiitoskeikka
 kiitoskimppu
-kiitoskirje
 kiitoskortti
 kiitoslahja
 kiitoslappu
@@ -129093,6 +129092,7 @@ paratiisiyhtiö
 pärekatto
 pärekori
 päreluoto
+paremmuusmittaus
 paremmanmakuinen
 paremmanpuoleinen
 paremmuusjärjestys
@@ -138764,6 +138764,7 @@ pörröeläin
 pörröhäntä
 pörröhuppu
 pörröpäällystetty
+pörröpääyhtye
 pörröpalttoo
 pörrösukka
 pörröturkki
@@ -219773,3 +219774,7 @@ zulunkielinen
 šiiavähemmistö
 šokki-ilmoitus
 šokkihoito
+onnellisuustutkimus
+tiedustelutaito
+rajavaltio
+ulkoraja

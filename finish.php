@@ -33,25 +33,39 @@ for ($i = 0;$i < count($p);$i++) {
         $next = buildWordFromLine($p[$i + 1]);
     }
   
-    $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
-    
-    if (!empty($isYhdyssana)) {
-        if (in_array("UPPER", $isYhdyssana)) {
-            $word->word = $word->mbUcfirst();
-        } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
-            $word->word = $word->mbUcfirst();
-            $next->word = $next->mbUcfirst();
+    $azure = CompoundWord::azureFixes($word, $next);
+    if (null !== $azure) {
+        $firstLetterCapital = $word->isFirstLetterCapital();
+        $word->word = $azure;
+        if ($firstLetterCapital) {
+          $word->word = $word->mbUcfirst();
         }
-      
-        if (in_array("DASH", $isYhdyssana)) {
-            $word->word = $word->word . "-" . $next->word;
-            $i++; // skip next
-        } elseif (in_array("TRUE", $isYhdyssana)) {
-            $word->word = $word->word . $next->word;
-            $i++; // skip next
-        } elseif (in_array("SPACE", $isYhdyssana)) {
-            $word->word = $word->word . " " . $next->word;
-            $i++; // skip next
+        $i++;
+    } else {
+        $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
+
+        if (!empty($isYhdyssana)) {
+            if (in_array("UPPER", $isYhdyssana)) {
+                $word->word = $word->mbUcfirst();
+                $next->word = $next->mbStrLower();
+            } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
+                $word->word = $word->mbUcfirst();
+                $next->word = $next->mbUcfirst();
+            }
+
+            if (in_array("DASH", $isYhdyssana)) {
+                $word->word = $word->word . "-" . $next->word;
+                $i++; // skip next
+            } elseif (in_array("TRUE", $isYhdyssana)) {
+                $word->word = $word->word . $next->word;
+                $i++; // skip next
+            } elseif (in_array("SPACE", $isYhdyssana)) {
+                $word->word = $word->word . " " . $next->word;
+                $i++; // skip next
+            } elseif (in_array("COLON", $isYhdyssana)) {
+                $word->word = $word->trimmed() . ":" . $next->word;
+                $i++; // skip next
+            }
         }
     }
     // capital
