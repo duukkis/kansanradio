@@ -19,7 +19,7 @@ cd ..
 # Run voikko for text
 python3 voikko.py > ./data/log
 # Clean with php
-php finish.php > ./data/final.txt
+php finish.php
 
 # todo copy by date the middle results
 
