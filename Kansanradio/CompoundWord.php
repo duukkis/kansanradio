@@ -8,6 +8,9 @@ class CompoundWord
       "kainalo" => ["Schauman" => "Kainalosauvan"],
       "se" => ["lainen" => "sellainen"],
       "roll" => ["alle" => "rouvalle"],
+      "herran" => ["rokka" => "hernerokka"],
+      "herra" => ["soppa" => "hernesoppa"],
+      "varpu" => ["selle" => "varpuselle"],
     ];
   
     const COMPOUNDWORDS = [
@@ -103,12 +106,16 @@ class CompoundWord
             }
         }
         // sijapääte fix
-        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", "mme"])) {
+        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", "mme", "ään"])) {
             return ["TRUE"];
         }
     
-        if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias"]) && $word->wClass == "lukusana") {
+        if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias", "luvun", "vuotiaasta"]) 
+            && $word->wClass == "lukusana") {
             return ["DASH"];
+        }
+        if (in_array($other->word, ["luokan"]) && $word->wClass == "lukusana") {
+            return ["DOT"];
         }
         if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
             return ["TRUE"];

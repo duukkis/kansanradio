@@ -7,5 +7,5 @@ use Kansanradio\Builder;
 
 $baseFormArray = CompoundWord::buildCompoundWordArray("./resources/yhdyssanat.txt");
 
-$result = Builder::buildResult("./data/log" . $i, $baseFormArray);
+$result = Builder::buildResult("./data/log", $baseFormArray);
 file_put_contents("./data/final.txt", $result);

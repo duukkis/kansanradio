@@ -22,3 +22,8 @@ Running the code
 cp .env_example .env
 bash run.sh
 ```
+
+Todo:
+- vihreä liitto >> Vihreä
+- jakomielitauti >> 3 osainen yhdyssana
+- ei välimerkkiä joidenkin Isokirjaimisten sanoja ennen

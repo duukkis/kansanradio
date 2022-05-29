@@ -219778,3 +219778,12 @@ onnellisuustutkimus
 tiedustelutaito
 rajavaltio
 ulkoraja
+koiralääkäri
+kaasuharjoitus
+umpiopakattu
+kaljabaari
+kurpitsapenkki
+aktiivikuuntelija
+ruumisauto
+ammattikampanja
+ammattikampaaja

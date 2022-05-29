@@ -49,6 +49,9 @@ class Builder
                     if (in_array("DASH", $isYhdyssana)) {
                         $word->word = $word->word . "-" . $next->word;
                         $i++; // skip next
+                    } elseif (in_array("DOT", $isYhdyssana)) {
+                        $word->word = $word->word . ". " . $next->word;
+                        $i++; // skip next
                     } elseif (in_array("TRUE", $isYhdyssana)) {
                         $word->word = $word->word . $next->word;
                         $i++; // skip next
