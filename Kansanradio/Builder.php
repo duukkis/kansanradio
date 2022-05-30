@@ -81,6 +81,11 @@ class Builder
                 $result .= " ";
             }
         }
-        return $result;
+        return self::cleanUpAans($result);
+    }
+  
+    private static function cleanUpAans(string $result): string
+    {
+        return str_replace(["äää", "aaa"], ["äkää", "akaa"], $result);
     }
 }
