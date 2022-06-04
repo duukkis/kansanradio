@@ -121,6 +121,10 @@ class CompoundWord
             return ["TRUE"];
         }
     
+        if ($word->word === $other->word && $word->wClass !== "lukusana") {
+            return ["REMOVE"];
+        }
+
         if (!empty($word->baseform) && !empty($other->baseform)) {
             if (in_array($word1.$other->baseform, $baseforms)) {
                 return ["TRUE"];
