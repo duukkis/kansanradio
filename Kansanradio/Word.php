@@ -92,7 +92,7 @@ class Word
         return $first_letter . $str_end;
     }
 
-    public function mbStrLower(bool $lower_str_end = true): string
+    public function mbStrLower(): string
     {
         return mb_strtolower($this->word, "UTF-8");
     }
