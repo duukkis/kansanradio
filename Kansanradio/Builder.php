@@ -16,11 +16,17 @@ class Builder
     {
         $result = "";
         $pilkku = ["koska", "että", "mutta"];
+        $noPeriodAfter = ["ja", "että"];
         $c = file_get_contents($fileName);
         $p = explode("\n", $c);
         $next = null;
+        $lowerCaseNext = false;
         for ($i = 0;$i < count($p);$i++) {
             $word = self::buildWordFromLine($p[$i]);
+            if ($lowerCaseNext) {
+                $word->word = $word->mbStrLower();
+                $lowerCaseNext = false;
+            }
             // get next word for possible pilkku and for compound word
             if (isset($p[$i + 1])) {
                 $next = self::buildWordFromLine($p[$i + 1]);
@@ -58,6 +64,11 @@ class Builder
                     } elseif (in_array("SPACE", $isYhdyssana)) {
                         $word->word = $word->word . " " . $next->word;
                         $i++; // skip next
+                    } elseif (in_array("REMOVE", $isYhdyssana)) {
+                        // remove first
+                        $word = $next;
+                        $next = null;
+                        $i++; // skip next
                     } elseif (in_array("COLON", $isYhdyssana)) {
                         $word->word = $word->trimmed() . ":" . $next->word;
                         $i++; // skip next
@@ -68,14 +79,19 @@ class Builder
             if ($word->isCapital()) {
                 $word->word = $word->mbUcfirst();
             }
+            $lastLetter = mb_substr($word->word, -1, 1);
+            if (in_array($lastLetter, [".", "?"]) && in_array($word->trimmed(), $noPeriodAfter, true)) {
+                $word->word = $word->trimmed();
+                $lastLetter = mb_substr($word->word, -1, 1);
+                // lower case to be sure the next
+                $lowerCaseNext = true;
+            }
 
             $result .= $word->word;
 
-            $lastLetter = mb_substr($word->word, -1, 1);
-
             if (in_array($lastLetter, [".", "?"])) {
                 $result .= PHP_EOL;
-            } else if ($lastLetter !== "," && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
+            } elseif ($lastLetter !== "," && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
                 $result .= ", ";
             } else {
                 $result .= " ";
