@@ -6,14 +6,14 @@ class Word
     const UPPERCLASSES = ["etunimi", "sukunimi", "paikannimi", "nimi"];
     // what voikko thinks is nimi but is not
     const WORDNOTUPPER = [
-      "koskien", "maissa", "auring", 
-      "aurinko", "nurmelle", "puolin", "maata", "maassa", "auton", "äänistä",
+      "auring", "puolia", "puolin", 
+      "aurinko", "nurmelle", "maata", "maassa", "auton", "äänistä",
       "asukas", "takasin", "monien", "yleensä", "peruna", "pian", "jonkin", "taimia", 
       "milloin",
     ];
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
-    "Aamu", "Autto", "Asukas",
+    "Aamu", "Autto", "Asukas", "Aino",
     "Elo",
     "Ferrari",
     "Hal", "Helli",
@@ -24,7 +24,7 @@ class Word
     "Maa", "Mona", "Meri", 
     "Osta", "Oman",
     "Pello", "Pohja", "Päivi", "Päivä", 
-    "Ranta", "Riski", "Rinna",
+    "Ranta", "Riski", "Rinna", "Ruusu", 
     "Säde", "Sikiö",
     "Ukko", 
     "Valta",
@@ -32,16 +32,12 @@ class Word
     ];
     // what voikko thinks is not nimi but is (replace this with list)
     const DEFUPPERS = [
-      "kansanradio",
-      "ruotsi", 
-      "turku",
-      "skanska",
-      "yit",
-      "suomia",
-      "venäjä",
-      "ukraina",
+      "kansanradio", "ruotsi", 
+      "turku", "skanska",
+      "yit", "suomia",
+      "venäjä", "ukraina",
       "ranska",
-      "hakaniemi"
+      "hakaniemi", "paasikivi"
     ];
   
     public string $word = "";

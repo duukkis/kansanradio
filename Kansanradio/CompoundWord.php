@@ -11,6 +11,7 @@ class CompoundWord
       "herran" => ["rokka" => "hernerokka"],
       "herra" => ["soppa" => "hernesoppa"],
       "varpu" => ["selle" => "varpuselle"],
+      "lohduttaja" => ["sieni" => "lahottajasieni"],
     ];
   
     const COMPOUNDWORDS = [
@@ -106,7 +107,7 @@ class CompoundWord
             }
         }
         // sijapääte fix
-        if (in_array($word2, ["sta", "lle", "kin", "loinen", "uksia", "täminen", "mme", "ään"])) {
+        if (in_array($word2, ["sta", "lle", "lla", "kin", "han", "loinen", "uksia", "täminen", "mme", "ään", "akaan"])) {
             return ["TRUE"];
         }
     
