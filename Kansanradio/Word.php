@@ -9,7 +9,7 @@ class Word
       "auring", "puolia", "puolin", 
       "aurinko", "nurmelle", "maata", "maassa", "auton", "äänistä",
       "asukas", "takasin", "monien", "yleensä", "peruna", "pian", "jonkin", "taimia", 
-      "milloin",
+      "milloin", "kivisiä",
     ];
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
@@ -17,9 +17,9 @@ class Word
     "Elo",
     "Ferrari",
     "Hal", "Helli",
-    "Ilma", "Ilta",
+    "Ilma", "Ilta", "Ilmi", 
     "Janna", // todo >> jännä
-    "Kallinen", "Koski", "Kaste", "Kai", 
+    "Kallinen", "Koski", "Kaste", "Kai", "Kivinen",
     "Laina", "Lahja", 
     "Maa", "Mona", "Meri", 
     "Osta", "Oman",

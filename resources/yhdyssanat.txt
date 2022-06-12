@@ -1494,7 +1494,6 @@ aihevaltaus
 äijäryhmä
 äijäviihde
 äijäviisari
-aika-aika
 aika-ajaja
 aika-ajo
 aika-ajoetappi
@@ -218943,3 +218942,6 @@ zulunkielinen
 šiiavähemmistö
 šokki-ilmoitus
 šokkihoito
+nälkävyö
+housunpolvi
+Etelä-Suomi

@@ -106,8 +106,20 @@ class CompoundWord
                 }
             }
         }
+        if (in_array($word->word, ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"]) && $other->wClass == "paikannimi") {
+            return ["DOUBLE-UPPER", "DASH"];
+        }
+
+      
         // sijapääte fix
-        if (in_array($word2, ["sta", "lle", "lla", "kin", "han", "loinen", "uksia", "täminen", "mme", "ään", "akaan"])) {
+        if (in_array($word2, 
+                     [
+                       "sta", "lle", "lla", "kin", "han", "loinen", "laisista", 
+                      "uksia", "täminen", "mme", "ään", "akaan", "vät", "hun", 
+                       "ville", // if previous word ends to vowel?
+                       "na",
+                     ])
+           ) {
             return ["TRUE"];
         }
     
