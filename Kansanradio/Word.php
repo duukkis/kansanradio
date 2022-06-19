@@ -13,13 +13,13 @@ class Word
     ];
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
-    "Aamu", "Autto", "Asukas", "Aino",
+    "Aamu", "Autto", "Asukas", "Aino", "Alanen", 
     "Elo",
     "Ferrari",
     "Hal", "Helli",
     "Ilma", "Ilta", "Ilmi", 
     "Janna", // todo >> jännä
-    "Kallinen", "Koski", "Kaste", "Kai", "Kivinen",
+    "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
     "Maa", "Mona", "Meri", 
     "Osta", "Oman",
@@ -33,7 +33,7 @@ class Word
     // what voikko thinks is not nimi but is (replace this with list)
     const DEFUPPERS = [
       "kansanradio", "ruotsi", 
-      "turku", "skanska",
+      "turku", "skanska", "tikkakoski", "alppiharju", 
       "yit", "suomia",
       "venäjä", "ukraina",
       "ranska",
