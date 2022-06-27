@@ -7,10 +7,12 @@ use Kansanradio\Builder;
 
 $baseFormArray = CompoundWord::buildCompoundWordArray("../resources/yhdyssanat.txt");
 
-$numberOfLogs = 8;
+$numberOfLogs = 40;
 
 for ($i = 1;$i <= $numberOfLogs;$i++) {
-  $result = Builder::buildResult("./input/log" . $i, $baseFormArray);
-  file_put_contents("./output/result" . $i . ".txt", $result);
+  if (file_exists("./input/log" . $i)) { 
+    $result = Builder::buildResult("./input/log" . $i, $baseFormArray);
+    file_put_contents("./output/result" . $i . ".txt", $result);
+  }
 }
 
