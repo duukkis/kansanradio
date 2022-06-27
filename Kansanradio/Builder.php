@@ -31,6 +31,12 @@ class Builder
             if (isset($p[$i + 1])) {
                 $next = self::buildWordFromLine($p[$i + 1]);
             }
+            /*    
+EU MTK etc
+            if ($word->baseform == "lyhenne" && mb_strlen($word->word) === mb_strlen($word->baseform)) {
+              $word->word = $word->baseform;
+            }
+*/
 
             $azure = CompoundWord::azureFixes($word, $next);
             if (null !== $azure) {

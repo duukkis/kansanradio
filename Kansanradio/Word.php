@@ -36,8 +36,8 @@ class Word
       "turku", "skanska", "tikkakoski", "alppiharju", 
       "yit", "suomia",
       "venäjä", "ukraina",
-      "ranska",
-      "hakaniemi", "paasikivi"
+      "ranska", "jukka", "aamulehti", 
+      "hakaniemi", "paasikivi", "selander", "viaplay", 
     ];
   
     public string $word = "";

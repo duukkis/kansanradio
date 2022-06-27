@@ -169728,7 +169728,6 @@ suomenjääkiekkoliitto
 suomenkaltainen
 suomenkarja
 suomenkielentaito
-suomenkieli
 suomenkielinen
 suomenkielisyys
 suomenlammas
@@ -218952,3 +218951,8 @@ ulkoasiainhoitaja
 luomumenetelmä
 juhannusKoivu
 pinta-Alanen
+mökkipaikko
+rantakaislikko
+Nato-jäsenyys
+nato-jäsenyys
+r-kioski

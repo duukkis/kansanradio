@@ -110,7 +110,6 @@ class CompoundWord
         if (in_array($word->word, ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"]) && $other->wClass == "paikannimi") {
             return ["DOUBLE-UPPER", "DASH"];
         }
-
       
         // sijapääte fix
         if (in_array($word2, 
@@ -118,7 +117,7 @@ class CompoundWord
                        "sta", "lle", "lla", "kin", "han", "loinen", "laisista", 
                       "uksia", "täminen", "mme", "ään", "akaan", "vät", "hun", 
                        "ville", // if previous word ends to vowel?
-                       "na", "kaan", 
+                       "na", "kaan", "n", "set", "a", 
                      ])
            ) {
             return ["TRUE"];
