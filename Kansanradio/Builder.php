@@ -108,6 +108,6 @@ EU MTK etc
   
     private static function cleanUpAans(string $result): string
     {
-        return str_replace(["äää", "aaa"], ["äkää", "akaa"], $result);
+        return str_replace(["äää", "aaa", "nice", "pl"], ["äkää", "akaa", "nais", "PL"], $result);
     }
 }

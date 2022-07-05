@@ -13,6 +13,7 @@ class CompoundWord
       "varpu" => ["selle" => "varpuselle"],
       "lohduttaja" => ["sieni" => "lahottajasieni"],
       "yksi" => ["valtias" => "yksinvaltias"],
+      "tammi" => ["meihin" => "tamineihin"],
     ];
   
     const COMPOUNDWORDS = [
@@ -117,7 +118,7 @@ class CompoundWord
                        "sta", "lle", "lla", "kin", "han", "loinen", "laisista", 
                       "uksia", "täminen", "mme", "ään", "akaan", "vät", "hun", 
                        "ville", // if previous word ends to vowel?
-                       "na", "kaan", "n", "set", "a", 
+                       "na", "kaan", "n", "set", "a", "llä", 
                      ])
            ) {
             return ["TRUE"];

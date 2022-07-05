@@ -37,7 +37,7 @@ class Word
       "yit", "suomia",
       "venäjä", "ukraina",
       "ranska", "jukka", "aamulehti", 
-      "hakaniemi", "paasikivi", "selander", "viaplay", 
+      "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel", 
     ];
   
     public string $word = "";

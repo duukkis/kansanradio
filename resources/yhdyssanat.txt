@@ -218956,3 +218956,9 @@ rantakaislikko
 Nato-jäsenyys
 nato-jäsenyys
 r-kioski
+hullukaali
+punakoiso
+mustakoiso
+kasvi-ihminen
+leväpuuro
+paskavelli
