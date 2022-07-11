@@ -16,25 +16,26 @@ class Word
     "Aamu", "Autto", "Asukas", "Aino", "Alanen", 
     "Elo",
     "Ferrari",
-    "Hal", "Helli",
+    "Hal", "Helli", "Helle", 
     "Ilma", "Ilta", "Ilmi", 
     "Janna", // todo >> jännä
     "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
     "Maa", "Mona", "Meri", 
     "Osta", "Oman",
-    "Pello", "Pohja", "Päivi", "Päivä", 
+    "Pello", "Pohja", "Päivi", "Päivä", "Pelli", 
     "Ranta", "Riski", "Rinna", "Ruusu", 
     "Säde", "Sikiö",
+    "Tula",
     "Ukko", 
-    "Valta",
+    "Valta", "Varjonen", 
 
     ];
     // what voikko thinks is not nimi but is (replace this with list)
     const DEFUPPERS = [
       "kansanradio", "ruotsi", 
       "turku", "skanska", "tikkakoski", "alppiharju", 
-      "yit", "suomia",
+      "yit", "suomia", "haapakangas", 
       "venäjä", "ukraina",
       "ranska", "jukka", "aamulehti", 
       "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel", 
