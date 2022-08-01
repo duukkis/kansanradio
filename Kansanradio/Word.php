@@ -9,7 +9,7 @@ class Word
       "auring", "puolia", "puolin", 
       "aurinko", "nurmelle", "maata", "maassa", "auton", "äänistä",
       "asukas", "takasin", "monien", "yleensä", "peruna", "pian", "jonkin", "taimia", 
-      "milloin", "kivisiä",
+      "milloin", "kivisiä", "teoilla",
     ];
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
@@ -21,7 +21,7 @@ class Word
     "Janna", // todo >> jännä
     "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
-    "Maa", "Mona", "Meri", 
+    "Maa", "Mona", "Meri", "Marja",
     "Osta", "Oman",
     "Pello", "Pohja", "Päivi", "Päivä", "Pelli", 
     "Ranta", "Riski", "Rinna", "Ruusu", 
@@ -37,7 +37,7 @@ class Word
       "turku", "skanska", "tikkakoski", "alppiharju", 
       "yit", "suomia", "haapakangas", 
       "venäjä", "ukraina",
-      "ranska", "jukka", "aamulehti", 
+      "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
       "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel", 
     ];
   

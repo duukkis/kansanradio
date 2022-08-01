@@ -10,10 +10,12 @@ class CompoundWord
       "roll" => ["alle" => "rouvalle"],
       "herran" => ["rokka" => "hernerokka"],
       "herra" => ["soppa" => "hernesoppa"],
+      "liiga" => ["ja" => "liikoja"],
       "varpu" => ["selle" => "varpuselle"],
       "lohduttaja" => ["sieni" => "lahottajasieni"],
       "yksi" => ["valtias" => "yksinvaltias"],
       "tammi" => ["meihin" => "tamineihin"],
+      "enter" => ["bakteeri" => "enterobakteeri"],
     ];
   
     const COMPOUNDWORDS = [

@@ -27,3 +27,4 @@ Todo:
 - vihreä liitto >> Vihreä
 - jakomielitauti >> 3 osainen yhdyssana
 - ei välimerkkiä joidenkin Isokirjaimisten sanoja ennen
+- maksakortilla, maksakortti nimisana

@@ -98463,7 +98463,6 @@ maantieverkko
 maantieyhteys
 maanumero
 maanuoliainen
-maanuumen
 maanvaiva
 maanvajoama
 maanvaltaus
