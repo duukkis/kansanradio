@@ -28,3 +28,5 @@ Todo:
 - jakomielitauti >> 3 osainen yhdyssana
 - ei välimerkkiä joidenkin Isokirjaimisten sanoja ennen
 - maksakortilla, maksakortti nimisana
+- tupakka alkoholi feminismi => perusmuoto, perusmuoto, perusmuoto >> ,,
+- Kotkan pesä >> yhdyssana, same case as yhdyssana

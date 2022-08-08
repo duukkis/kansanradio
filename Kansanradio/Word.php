@@ -21,13 +21,13 @@ class Word
     "Janna", // todo >> jännä
     "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
-    "Maa", "Mona", "Meri", "Marja",
+    "Maa", "Mona", "Meri", "Marja", "Murto", 
     "Osta", "Oman",
     "Pello", "Pohja", "Päivi", "Päivä", "Pelli", 
     "Ranta", "Riski", "Rinna", "Ruusu", 
     "Säde", "Sikiö",
     "Tula",
-    "Ukko", 
+    "Ukko", "Virta",
     "Valta", "Varjonen", 
 
     ];
