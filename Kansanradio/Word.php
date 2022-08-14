@@ -3,6 +3,11 @@ namespace Kansanradio;
 
 class Word
 {
+    const AZURE = [
+      "boot" => "puut",
+      "boozt" => "suusta",
+      "tojota" => "Toyota",
+    ];
     const UPPERCLASSES = ["etunimi", "sukunimi", "paikannimi", "nimi"];
     // what voikko thinks is nimi but is not
     const WORDNOTUPPER = [
@@ -21,7 +26,7 @@ class Word
     "Janna", // todo >> jännä
     "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
-    "Maa", "Mona", "Meri", "Marja", "Murto", 
+    "Maa", "Mona", "Meri", "Marja", "Murto", "Mersu",
     "Osta", "Oman",
     "Pello", "Pohja", "Päivi", "Päivä", "Pelli", 
     "Ranta", "Riski", "Rinna", "Ruusu", 
@@ -35,7 +40,7 @@ class Word
     const DEFUPPERS = [
       "kansanradio", "ruotsi", 
       "turku", "skanska", "tikkakoski", "alppiharju", 
-      "yit", "suomia", "haapakangas", 
+      "yit", "suomia", "haapakangas", "haikala", 
       "venäjä", "ukraina",
       "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
       "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel", 
@@ -50,6 +55,9 @@ class Word
         ?string $baseform,
         ?string $wClass
     ) {
+        if (isset(self::AZURE[$word])) {
+          $word = self::AZURE[$word];
+        }
         $this->word = $word;
         $this->baseform = $baseform;
         $this->wClass = $wClass;
