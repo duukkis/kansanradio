@@ -47,6 +47,7 @@ class Word
     ];
   
     public string $word = "";
+    public string $lastLetter = "";
     public ?string $baseform = null;
     public ?string $wClass = null;
   
@@ -58,16 +59,39 @@ class Word
         if (isset(self::AZURE[$word])) {
           $word = self::AZURE[$word];
         }
-        $this->word = $word;
+        $this->word = trim($word);
+        $this->setLastLetter();
         $this->baseform = $baseform;
         $this->wClass = $wClass;
     }
-  
+
+    private function setLastLetter(): void
+    {
+        $this->lastLetter = mb_substr($this->word, -1, 1);
+    }
+
     public function trimmed(): string
     {
         return trim($this->word, ".,! ");
     }
+
+    public function trim(): Word
+    {
+        $this->word = trim($this->word, ".,! ");
+        $this->setLastLetter();
+        return $this;
+    }
+
+    public function isLastLetterComma(): bool
+    {
+        return ($this->lastLetter === ",");
+    }
   
+    public function isLastLetterEndingSentence(): bool
+    {
+        return in_array($this->lastLetter, [".", "?", "!"], true);
+    }
+
     public function isCapital(): bool
     {
         return
@@ -85,7 +109,7 @@ class Word
         return ($this->word === $this->mbUcFirst());
     }
 
-    public function mbUcfirst(bool $lower_str_end = true): string
+    private function mbUcfirst(bool $lower_str_end = true): string
     {
         $str = $this->word;
         $first_letter = mb_strtoupper(mb_substr($str, 0, 1, "UTF-8"), "UTF-8");
@@ -97,8 +121,23 @@ class Word
         return $first_letter . $str_end;
     }
 
-    public function mbStrLower(): string
+    public function setUcFirst(): void
     {
-        return mb_strtolower($this->word, "UTF-8");
+        $this->word = $this->mbUcfirst();
+    }
+
+    public function setStrLower(): void
+    {
+        $this->word = mb_strtolower($this->word, "UTF-8");
+    }
+
+    public static function append(Word $first, string $append, Word $second): Word
+    {
+        $newBaseForm = ($first->baseform !== null && $second->baseform !== null) ? $first->baseform . $append . $second->baseform : null;
+        return new Word(
+            $first->word . $append . $second->word,
+            $newBaseForm,
+            $first->wClass
+        );
     }
 }

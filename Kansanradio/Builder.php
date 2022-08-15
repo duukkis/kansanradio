@@ -24,7 +24,7 @@ class Builder
         for ($i = 0;$i < count($p);$i++) {
             $word = self::buildWordFromLine($p[$i]);
             if ($lowerCaseNext) {
-                $word->word = $word->mbStrLower();
+                $word->setStrLower();
                 $lowerCaseNext = false;
             }
             // get next word for possible pilkku and for compound word
@@ -43,7 +43,7 @@ EU MTK etc
                 $firstLetterCapital = $word->isFirstLetterCapital();
                 $word->word = $azure;
                 if ($firstLetterCapital) {
-                  $word->word = $word->mbUcfirst();
+                  $word->setUcFirst();
                 }
                 $i++;
             } else {
@@ -51,24 +51,24 @@ EU MTK etc
 
                 if (!empty($isYhdyssana)) {
                     if (in_array("UPPER", $isYhdyssana)) {
-                        $word->word = $word->mbUcfirst();
-                        $next->word = $next->mbStrLower();
+                        $word->setUcFirst();
+                        $next->setStrLower();
                     } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
-                        $word->word = $word->mbUcfirst();
-                        $next->word = $next->mbUcfirst();
+                        $word->setUcFirst();
+                        $next->setUcFirst();
                     }
 
                     if (in_array("DASH", $isYhdyssana)) {
-                        $word->word = $word->trimmed() . "-" . $next->word;
+                        $word = Word::append($word->trim(), "-", $next);
                         $i++; // skip next
                     } elseif (in_array("DOT", $isYhdyssana)) {
-                        $word->word = $word->trimmed() . ". " . $next->word;
+                        $word = Word::append($word->trim(), ". ", $next);
                         $i++; // skip next
                     } elseif (in_array("TRUE", $isYhdyssana)) {
-                        $word->word = $word->trimmed() . $next->word;
+                        $word = Word::append($word->trim(), "", $next);
                         $i++; // skip next
                     } elseif (in_array("SPACE", $isYhdyssana)) {
-                        $word->word = $word->trimmed() . " " . $next->word;
+                        $word = Word::append($word->trim(), " ", $next);
                         $i++; // skip next
                     } elseif (in_array("REMOVE", $isYhdyssana)) {
                         // remove first
@@ -76,28 +76,27 @@ EU MTK etc
                         $next = null;
                         $i++; // skip next
                     } elseif (in_array("COLON", $isYhdyssana)) {
-                        $word->word = $word->trimmed() . ":" . $next->word;
+                        $word = Word::append($word->trim(), ":", $next);
                         $i++; // skip next
                     }
                 }
             }
             // capital
             if ($word->isCapital()) {
-                $word->word = $word->mbUcfirst();
+                $word->setUcFirst();
             }
             $lastLetter = mb_substr($word->word, -1, 1);
-            if (in_array($lastLetter, [".", "?"]) && in_array($word->trimmed(), $noPeriodAfter, true)) {
-                $word->word = $word->trimmed();
-                $lastLetter = mb_substr($word->word, -1, 1);
+            if ($word->isLastLetterEndingSentence() && in_array($word->trimmed(), $noPeriodAfter, true)) {
+                $word->trim();
                 // lower case to be sure the next
                 $lowerCaseNext = true;
             }
 
             $result .= $word->word;
 
-            if (in_array($lastLetter, [".", "?"])) {
+            if ($word->isLastLetterEndingSentence()) {
                 $result .= PHP_EOL;
-            } elseif ($lastLetter !== "," && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
+            } elseif (!$word->isLastLetterComma() && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
                 $result .= ", ";
             } else {
                 $result .= " ";
