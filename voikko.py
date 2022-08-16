@@ -19,7 +19,7 @@ def good(w, orig):
 word_list = txt.split()
 for w in word_list:
     orig = w
-    w = w.lower().replace(".", "").replace(",", "")
+    w = w.lower().replace(".", "").replace(",", "").replace("?", "").replace("!", "")
     r = good(w, orig)
     if not r:
         print (orig)
