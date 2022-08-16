@@ -38,12 +38,13 @@ class Word
     ];
     // what voikko thinks is not nimi but is (replace this with list)
     const DEFUPPERS = [
-      "kansanradio", "ruotsi", 
+      "kansanradio", "ruotsi", "alppiharju",
       "turku", "skanska", "tikkakoski", "alppiharju", 
       "yit", "suomia", "haapakangas", "haikala", 
-      "venäjä", "ukraina",
+      "venäjä", "ukraina", "nato",
       "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
-      "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel", 
+      "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel",
+      "iltalehti",
     ];
   
     public string $word = "";
@@ -131,13 +132,18 @@ class Word
         $this->word = mb_strtolower($this->word, "UTF-8");
     }
 
+    public function lower(): string
+    {
+        return mb_strtolower($this->trimmed(), "UTF-8");
+    }
+
     public static function append(Word $first, string $append, Word $second): Word
     {
         $newBaseForm = ($first->baseform !== null && $second->baseform !== null) ? $first->baseform . $append . $second->baseform : null;
         return new Word(
             $first->word . $append . $second->word,
             $newBaseForm,
-            $first->wClass
+            null
         );
     }
 }

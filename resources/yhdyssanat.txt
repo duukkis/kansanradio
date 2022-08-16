@@ -4452,7 +4452,6 @@ alppiässä
 alppiavaus
 alppicup
 alppifani
-alppiharju
 alppihenkinen
 alppihiihdonopettaja
 alppihiihtäjä
@@ -39406,7 +39405,7 @@ iltakymmen
 iltalääke
 iltalaiva
 iltalamppu
-iltalehti
+Iltalehti
 iltalenkki
 iltalento
 iltalisä
@@ -39497,7 +39496,6 @@ iltarutiini
 iltarutiininen
 iltaruuhka
 iltarytmi
-iltasanoma
 iltasatu
 iltasessio
 iltasoitto
@@ -125238,7 +125236,6 @@ päivänavauskäytäntö
 päivänäytös
 päiväneva
 päiväniemi
-päivänjatko
 päivänkakkara
 päivänkehrä
 päivänkorento
@@ -218955,7 +218952,6 @@ pinta-Alanen
 mökkipaikko
 rantakaislikko
 Nato-jäsenyys
-nato-jäsenyys
 r-kioski
 hullukaali
 punakoiso
@@ -218963,3 +218959,14 @@ mustakoiso
 kasvi-ihminen
 leväpuuro
 paskavelli
+pieneläinhoitola
+ajohalli
+atomivoima
+äitirukka
+pohjois-Pohjanmaa
+Pohjois-Pohjanmaa
+korpiseutu
+perunaPello
+tv-ohjelma
+osmankäämi
+Ilta-Sanoma

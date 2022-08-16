@@ -19,66 +19,20 @@ class CompoundWord
     ];
   
     const COMPOUNDWORDS = [
-      "ajo" => ["halli" => ["TRUE"]],
-      "asuin" => ["paikalla" => ["TRUE"]],
-      "atomi" => ["voima" => ["TRUE"]],
-      "huomenta" => ["päivää" => ["TRUE"]],
-      "hinnan" => ["nousu" => ["TRUE"]],
-      "hoitaja" => ["pula" => ["TRUE"]],
-      "jatko" => ["hakemus" => ["TRUE"]],
-      "junan" => ["tuoma" => ["TRUE"]],
-      "karamelli" => ["paper" => ["TRUE"]],
-      "kimppa" => ["porukk" => ["TRUE"]],
-      "koiran" => ["omistaja" => ["TRUE"]],
-      "korotus" => ["vaatimu" => ["TRUE"]],
-      "korpi" => [
-        "seud" => ["TRUE"],
-        "seut" => ["TRUE"]
-      ],
-      "laku" => ["jäätelö" => ["TRUE"]],
-      "lähi" => ["kuvi" => ["TRUE"]],
-      "metalli" => ["kanne" => ["TRUE"]],
-      "osman" => ["käämi" => ["TRUE"]],
-      "perunamuusi" => ["jauhe" => ["TRUE"]],
-      "peruna" => ["pel" => ["TRUE"]],
-      "perus" => ["hoitaj" => ["TRUE"]],
-      "piha" => ["kasvillisuu" => ["TRUE"]],
-      "pizza" => ["pala" => ["TRUE"]],
       "s" => ["market" => ["UPPER", "DASH"]],
       "sian" => ["läski" => ["TRUE"]],
-      "sivusta" => ["katsoja" => ["TRUE"]],
-      "sotilas" => ["tehtäväs" => ["TRUE"]],
-      "säästö" => ["vinkk" => ["TRUE"]],
       "tammer" => ["kosk" => ["UPPER", "TRUE"]],
-      "tausta" => ["ään" => ["TRUE"]],
-      "terassi" => ["kesä" => ["TRUE"]],
-      "tissi" => ["vako" => ["TRUE"]],
       "tosi" => ["koi" => ["TRUE"]],
-      "tuhka" => ["kupis" => ["TRUE"]],
-      "tupakan" => ["tump" => ["TRUE"]],
-      "tyhjän" => ["toimitta" => ["TRUE"]],
       "tä" => ["ynnä" => ["TRUE"]],
-      "yli" => ["mainostettu" => ["TRUE"]],
-      "vappu" => [
-          "pallo" => ["TRUE"],
-          "pullo" => ["TRUE"]
-      ],
       "vei" => ["tikat" => ["TRUE"]],
-      "äiti" => ["rukka" => ["TRUE"]],
       // --------------------------------- eu:n, tv:ssä
       "eu" => ["n" => ["COLON"]],
       "tv" => ["ssä" => ["COLON"]],
-      // --------------------------------- true but with a-a, o-o
-      "kunta" => ["ala" => ["DASH", "TRUE"]],
-      "sota" => ["alu" => ["DASH", "TRUE"]],
-      "televisio" => ["ohjelm" => ["DASH", "TRUE"]],
-
-      // --------------------------------- names
-      "kansa" => ["radio" => ["UPPER", "TRUE"]],
       "kansan" => [
-          "radio" => ["UPPER", "TRUE"],
-          "ratio" => ["UPPER", "TRUE"],
+        "radio" => ["UPPER", "TRUE"],
+        "ratio" => ["UPPER", "TRUE"],
       ],
+      // --------------------------------- names
       "ruotsin" => ["pyhtää" => ["UPPER", "TRUE"]],
 
       // --------------------------------- 
@@ -86,22 +40,15 @@ class CompoundWord
 
       // --------------------------------- 
       "yle" => ["areena" => ["DOUBLE-UPPER", "SPACE"]],
-
-      // --------------------------------- 
-      "etelä" => ["helsin" => ["DOUBLE-UPPER", "DASH"]],
-      "itä" => ["suome" => ["DOUBLE-UPPER", "DASH"]],
-      "pohjois" => ["pohjanmaa" => ["DOUBLE-UPPER", "DASH"]],
-      "varsinais" => ["suome" => ["DOUBLE-UPPER", "DASH"]],
-      "kanta" => ["häme" => ["DOUBLE-UPPER", "DASH"]],
     ];
   
-    public static function isCompound(Word $word, $other, array $baseforms): array
+    public static function isCompound(Word $word, Word $other, array $baseforms): array
     {
         if (is_null($other)) {
             return [];
         }
-        $word1 = mb_strtolower($word->trimmed());
-        $word2 = mb_strtolower($other->trimmed());
+        $word1 = $word->lower();
+        $word2 = $other->lower();
     
         if (isset(self::COMPOUNDWORDS[$word1])) {
             foreach (self::COMPOUNDWORDS[$word1] as $key => $value) {
@@ -110,7 +57,8 @@ class CompoundWord
                 }
             }
         }
-        if (in_array($word->word, ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"]) && $other->wClass == "paikannimi") {
+        if (in_array($word->lower(), ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"])
+            && in_array($other->wClass, ["paikannimi", "nimisana"])) {
             return ["DOUBLE-UPPER", "DASH"];
         }
       
@@ -126,11 +74,15 @@ class CompoundWord
             return ["TRUE"];
         }
     
-        if (in_array($other->word, ["vuotiaat", "vuotiaita", "vuotias", "luvun", "vuotiaasta"]) 
+        if (
+            (
+                in_array($other->baseform, ["vuotias", "luku"]) ||
+                in_array($other->word, ["vuotiaita", "vuotiaat", "vuotiaasta", "vuotias"])
+            )
             && $word->wClass == "lukusana") {
             return ["DASH"];
         }
-        if (in_array($other->word, ["luokan"]) && $word->wClass == "lukusana") {
+        if (in_array($other->baseform, ["luokka"]) && $word->wClass == "lukusana") {
             return ["DOT"];
         }
         if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
@@ -141,11 +93,13 @@ class CompoundWord
             return ["REMOVE"];
         }
 
+        // compare lower cases, return what is found on baseforms
         if (!empty($word->baseform) && !empty($other->baseform)) {
-            if (in_array($word1.$other->baseform, $baseforms)) {
-                return ["TRUE"];
-            } else if (in_array($word1."-".$other->baseform, $baseforms)) {
-                return ["TRUE", "DASH"];
+            $baseLower = mb_strtolower($other->baseform);
+            if (isset($baseforms[$word1.$baseLower])) {
+                return $baseforms[$word1.$baseLower];
+            } else if (isset($baseforms[$word1 . "-" . $baseLower])) {
+                return $baseforms[$word1 . "-" . $baseLower];
             }
         }
         return [];
@@ -174,11 +128,35 @@ class CompoundWord
      */
     public static function buildCompoundWordArray(string $fileName): array
     {
+        $result = [];
         if (file_exists($fileName)) {
             $c = file_get_contents($fileName);
-            $p = explode("\n", $c);
-            return $p;
+            $values = explode("\n", $c);
+            foreach ($values as $k) {
+                $hasDash = explode("-", $k);
+                $firstUpper = self::startsWithUpper($hasDash[0]);
+                if (count($hasDash) > 1) {
+                    $wRes = ["DASH"];
+                    $secondUpper = self::startsWithUpper($hasDash[1]);
+                } else {
+                    $wRes = ["TRUE"];
+                    $secondUpper = false;
+                }
+                if ($firstUpper && $secondUpper) {
+                    $wRes[] = "DOUBLE-UPPER";
+                } else if ($firstUpper) {
+                    $wRes[] = "UPPER";
+                }
+                $result[mb_strtolower($k, "UTF-8")] = $wRes;
+            }
         }
-        return [];
-    }  
+        return $result;
+    }
+
+    private static function startsWithUpper(string $str): bool
+    {
+        $firstLetter = mb_substr($str, 0, 1, "UTF-8");
+        $capital = mb_strtoupper($firstLetter, "UTF-8");
+        return ($firstLetter === $capital);
+    }
 }

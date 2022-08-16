@@ -47,6 +47,9 @@ EU MTK etc
                 }
                 $i++;
             } else {
+                // move this logic to Compoundword and have it return a new word
+                // add isCompound to Word and if($newword->isCompound) { $i++ }
+                // fix Nato-jäsenyys and Peru Pello
                 $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
 
                 if (!empty($isYhdyssana)) {
