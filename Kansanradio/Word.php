@@ -19,7 +19,7 @@ class Word
     // .... keep ^ for a while, start using this
     const BASENOTUPPER = [
     "Aamu", "Autto", "Asukas", "Aino", "Alanen", 
-    "Elo",
+    "Elo", "Kuha",
     "Ferrari",
     "Hal", "Helli", "Helle", 
     "Ilma", "Ilta", "Ilmi", 

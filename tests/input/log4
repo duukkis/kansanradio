@@ -87,7 +87,7 @@ kun kun sidesana
 kuvia kuva nimisana
 mitä mikä asemosana
 ne ne asemosana
-lähettää?
+lähettää? lähettää teonsana
 Tervehdys tervehdys nimisana
 täältä täällä seikkasana
 kansan kansa nimisana
@@ -1214,7 +1214,7 @@ Muistatko muistaa teonsana
 koska koska sidesana
 multa multa nimisana
 nousee nousta teonsana
-verotus?
+verotus? verotus nimisana
 Eikö ei kieltosana
 se se asemosana
 riitä riittää teonsana
@@ -1338,7 +1338,7 @@ Mitähän mikä asemosana
 he he asemosana
 mahtavat mahtaa teonsana
 valtiolta valtio nimisana
-saadaan?
+saadaan? saada teonsana
 Olisiko olla teonsana
 peräti peräti seikkasana
 tuulisuoja tuulisuoja nimisana
@@ -1650,7 +1650,7 @@ kukahan kuka asemosana
 noita nuo asemosana
 herran herra nimisana
 ********
-hoitaa?
+hoitaa? hoitaa teonsana
 Sitten sitten seikkasana
 sitä se asemosana
 ihmettelen ihmetellä teonsana
@@ -1716,7 +1716,7 @@ oli olla teonsana
 tämä tämä asemosana
 tehy Tehy nimi
 vai vai sidesana
-ei?
+ei? ei kieltosana
 Kun kun sidesana
 mikä mikä asemosana
 se se asemosana
@@ -1759,7 +1759,7 @@ Mitä mikä asemosana
 sitten sitten seikkasana
 ottaa ottaa teonsana
 tämmöinen tämmöinen nimisana_laatusana
-homma?
+homma? homma nimisana
 Silloin silloin seikkasana
 entinen entinen nimisana_laatusana
 työ työ nimisana
@@ -1823,7 +1823,7 @@ titteli titteli nimisana
 mikä mikä asemosana
 vaatii vaatia teonsana
 lisää lisätä teonsana
-työtä?
+työtä? työ nimisana
 No no seikkasana
 hei hei huudahdussana
 kansalaiset kansalainen nimisana
@@ -2575,7 +2575,7 @@ tämmöistä tämmöinen nimisana_laatusana
 voi voi nimisana
 olla, olla teonsana
 että että sidesana
-joukkohauta?
+joukkohauta? joukkohauta nimisana
 Ja ja sidesana
 löytyy. löytyä teonsana
 Onko olla teonsana
@@ -2594,19 +2594,19 @@ koneella, kone nimisana
 että että sidesana
 mitä mikä asemosana
 siellä siellä seikkasana
-puuhataan?
+puuhataan? puuhata teonsana
 Miten miten seikkasana
 miten miten seikkasana
 annetaan antaa teonsana
 tämmöistä tämmöinen nimisana_laatusana
 tapahtua tapahtua teonsana
 tänä tämä asemosana
-päivänä?
+päivänä? Päivä etunimi
 Joutuuko joutua teonsana
 suomikin Suomi paikannimi
 joskus joskus seikkasana
 semmosen
-kohteeksi?
+kohteeksi? kohde nimisana
 Hyvänen hyvänen seikkasana
 aika, aika nimisana
 eihän ei kieltosana
@@ -2637,7 +2637,7 @@ Mitä mikä asemosana
 se se asemosana
 sota sota nimisana
 oikein oikea nimisana_laatusana
-on?
+on? olla teonsana
 Kuulinko kuulla teonsana
 mä
 oikein, oikea nimisana_laatusana
@@ -2648,7 +2648,7 @@ tulitauko, tulitauko nimisana
 että että sidesana
 jotain jokin asemosana
 voisi voi nimisana
-keskustella?
+keskustella? keskustella teonsana
 Toivoisin toivoa teonsana
 niin niin seikkasana
 hartaasti, harras laatusana
@@ -2705,7 +2705,7 @@ sotatoimet sotatoimi nimisana
 ukrainassa Ukraina paikannimi
 täällä täällä seikkasana
 kansan kansa nimisana
-radiossa?
+radiossa? radio nimisana
 Viime viime laatusana
 aikoina aika nimisana
 pohdittu pohdittu laatusana

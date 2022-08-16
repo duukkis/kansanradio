@@ -28,8 +28,8 @@ Todo:
 - jakomielitauti >> 3 osainen yhdyssana
 - ei välimerkkiä joidenkin Isokirjaimisten sanoja ennen
 - maksakortilla, maksakortti nimisana
-- Kotkan pesä >> yhdyssana, same case as yhdyssana
 - alppiharju sta
+- kyber ja hybridi vaikuttaminen >> kyber- ja hybridi- vaikuttaminen
 
 Won't fix
 - tupakka alkoholi feminismi => perusmuoto, perusmuoto, perusmuoto >> add commas (too many wrong positives)

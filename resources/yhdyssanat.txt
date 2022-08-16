@@ -53011,7 +53011,6 @@ kansanpubi
 kansanpuisto
 kansanpuistontie
 kansanpuolue
-kansanradio
 kansanradiomainen
 kansanravintola
 kansanrintama
@@ -173133,7 +173132,6 @@ syystapahtuma
 syystassuttelu
 syysterassi
 syystrendi
-syystuli
 syystulva
 syystunnelma
 syystyö
@@ -183980,7 +183978,6 @@ tilannekuvaus
 tilannemäärä
 tilannemuutos
 tilannenopeus
-tilanneon
 tilanneorganisaatio
 tilannepaikka
 tilannepäivitys
@@ -218970,3 +218967,11 @@ perunaPello
 tv-ohjelma
 osmankäämi
 Ilta-Sanoma
+Ruotsinpyhtää
+WhatsApp
+veitikka
+täynnä
+S-marketti
+sianläski
+tosikoi
+Kansanradio

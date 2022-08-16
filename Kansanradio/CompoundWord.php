@@ -6,6 +6,7 @@ class CompoundWord
 {
     const FIXUS = [
       "kainalo" => ["Schauman" => "Kainalosauvan"],
+      "high" => ["Kuha" => "haikuhan"],
       "se" => ["lainen" => "sellainen"],
       "roll" => ["alle" => "rouvalle"],
       "herran" => ["rokka" => "hernerokka"],
@@ -19,29 +20,14 @@ class CompoundWord
     ];
   
     const COMPOUNDWORDS = [
-      "s" => ["market" => ["UPPER", "DASH"]],
-      "sian" => ["läski" => ["TRUE"]],
-      "tammer" => ["kosk" => ["UPPER", "TRUE"]],
-      "tosi" => ["koi" => ["TRUE"]],
-      "tä" => ["ynnä" => ["TRUE"]],
-      "vei" => ["tikat" => ["TRUE"]],
       // --------------------------------- eu:n, tv:ssä
       "eu" => ["n" => ["COLON"]],
       "tv" => ["ssä" => ["COLON"]],
-      "kansan" => [
-        "radio" => ["UPPER", "TRUE"],
-        "ratio" => ["UPPER", "TRUE"],
-      ],
-      // --------------------------------- names
-      "ruotsin" => ["pyhtää" => ["UPPER", "TRUE"]],
-
-      // --------------------------------- 
-      "whats" => ["app" => ["DOUBLE-UPPER", "TRUE"]],
-
-      // --------------------------------- 
+      // ---------------------------------
       "yle" => ["areena" => ["DOUBLE-UPPER", "SPACE"]],
+      "whats" => ["app" => ["DOUBLE-UPPER", "TRUE"]],
     ];
-  
+
     public static function isCompound(Word $word, Word $other, array $baseforms): array
     {
         if (is_null($other)) {
@@ -49,7 +35,8 @@ class CompoundWord
         }
         $word1 = $word->lower();
         $word2 = $other->lower();
-    
+
+        // check local
         if (isset(self::COMPOUNDWORDS[$word1])) {
             foreach (self::COMPOUNDWORDS[$word1] as $key => $value) {
                 if (strpos($word2, $key) === 0) {
@@ -102,9 +89,17 @@ class CompoundWord
                 return $baseforms[$word1 . "-" . $baseLower];
             }
         }
+
+        if ($other !== null) {
+            if (isset($baseforms[$word1.$word2])) {
+                return $baseforms[$word1.$word2];
+            } else if (isset($baseforms[$word1 . "-" . $word2])) {
+                return $baseforms[$word1 . "-" . $word2];
+            }
+        }
         return [];
     }
-  
+
     public static function azureFixes(Word $word, $other): ?string
     {
         if (is_null($other)) {
