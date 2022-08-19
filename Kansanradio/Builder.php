@@ -47,45 +47,17 @@ EU MTK etc
                 }
                 $i++;
             } else {
+                $word = CompoundWord::makeCompound($word, $next, $baseFormArray);
+                if ($word->isCompound) {
+                    $next = null;
+                    $i++;
+                }
                 // move this logic to Compoundword and have it return a new word
                 // add isCompound to Word and if($newword->isCompound) { $i++ }
                 // fix Nato-jäsenyys and Peru Pello
-                $isYhdyssana = CompoundWord::isCompound($word, $next, $baseFormArray);
-
-                if (!empty($isYhdyssana)) {
-                    if (in_array("UPPER", $isYhdyssana)) {
-                        $word->setUcFirst();
-                        $next->setStrLower();
-                    } else if (in_array("DOUBLE-UPPER", $isYhdyssana)) {
-                        $word->setUcFirst();
-                        $next->setUcFirst();
-                    }
-
-                    if (in_array("DASH", $isYhdyssana)) {
-                        $word = Word::append($word->trim(), "-", $next);
-                        $i++; // skip next
-                    } elseif (in_array("DOT", $isYhdyssana)) {
-                        $word = Word::append($word->trim(), ". ", $next);
-                        $i++; // skip next
-                    } elseif (in_array("TRUE", $isYhdyssana)) {
-                        $word = Word::append($word->trim(), "", $next);
-                        $i++; // skip next
-                    } elseif (in_array("SPACE", $isYhdyssana)) {
-                        $word = Word::append($word->trim(), " ", $next);
-                        $i++; // skip next
-                    } elseif (in_array("REMOVE", $isYhdyssana)) {
-                        // remove first
-                        $word = $next;
-                        $next = null;
-                        $i++; // skip next
-                    } elseif (in_array("COLON", $isYhdyssana)) {
-                        $word = Word::append($word->trim(), ":", $next);
-                        $i++; // skip next
-                    }
-                }
             }
             // capital
-            if ($word->isCapital()) {
+            if ($word->isCapital() && !$word->isCompound) {
                 $word->setUcFirst();
             }
             $lastLetter = mb_substr($word->word, -1, 1);
@@ -110,6 +82,6 @@ EU MTK etc
   
     private static function cleanUpAans(string $result): string
     {
-        return str_replace(["äää", "aaa", "nice", " pl ", " pl."], ["äkää", "akaa", "nais", " PL ", " PL."], $result);
+        return str_replace(["äää", "aaa", "nice", " pl ", " pl.", "whats app", "Whatsapp"], ["äkää", "akaa", "nais", " PL ", " PL.", "WhatsApp", "WhatsApp"], $result);
     }
 }

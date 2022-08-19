@@ -51,11 +51,13 @@ class Word
     public string $lastLetter = "";
     public ?string $baseform = null;
     public ?string $wClass = null;
-  
+    public bool $isCompound = false;
+
     public function __construct(
         string $word,
-        ?string $baseform,
-        ?string $wClass
+        ?string $baseform = null,
+        ?string $wClass = null,
+        bool $isCompound = false
     ) {
         if (isset(self::AZURE[$word])) {
           $word = self::AZURE[$word];
@@ -64,6 +66,7 @@ class Word
         $this->setLastLetter();
         $this->baseform = $baseform;
         $this->wClass = $wClass;
+        $this->isCompound = $isCompound;
     }
 
     private function setLastLetter(): void
@@ -122,14 +125,16 @@ class Word
         return $first_letter . $str_end;
     }
 
-    public function setUcFirst(): void
+    public function setUcFirst(): Word
     {
         $this->word = $this->mbUcfirst();
+        return $this;
     }
 
-    public function setStrLower(): void
+    public function setStrLower(): Word
     {
         $this->word = mb_strtolower($this->word, "UTF-8");
+        return $this;
     }
 
     public function lower(): string
@@ -137,13 +142,15 @@ class Word
         return mb_strtolower($this->trimmed(), "UTF-8");
     }
 
-    public static function append(Word $first, string $append, Word $second): Word
+    public static function append(Word $first, string $append, Word $second, ?string $wClass = null): Word
     {
         $newBaseForm = ($first->baseform !== null && $second->baseform !== null) ? $first->baseform . $append . $second->baseform : null;
+        $first->trim();
         return new Word(
             $first->word . $append . $second->word,
             $newBaseForm,
-            null
+            $wClass,
+            true
         );
     }
 }

@@ -18,86 +18,77 @@ class CompoundWord
       "tammi" => ["meihin" => "tamineihin"],
       "enter" => ["bakteeri" => "enterobakteeri"],
     ];
-  
-    const COMPOUNDWORDS = [
-      // --------------------------------- eu:n, tv:ssä
-      "eu" => ["n" => ["COLON"]],
-      "tv" => ["ssä" => ["COLON"]],
-      // ---------------------------------
-      "yle" => ["areena" => ["DOUBLE-UPPER", "SPACE"]],
-      "whats" => ["app" => ["DOUBLE-UPPER", "TRUE"]],
-    ];
 
-    public static function isCompound(Word $word, Word $other, array $baseforms): array
+    public static function makeCompound(Word $word, Word $other, array $baseforms): Word
     {
         if (is_null($other)) {
-            return [];
+            return $word;
         }
         $word1 = $word->lower();
         $word2 = $other->lower();
 
         // check local
-        if (isset(self::COMPOUNDWORDS[$word1])) {
-            foreach (self::COMPOUNDWORDS[$word1] as $key => $value) {
-                if (strpos($word2, $key) === 0) {
-                    return $value;
-                }
-            }
+        if (in_array($word1, ["eu", "tv"]) && in_array($word2, ["n", "ssä"])) {
+            return Word::append($word, ":", $other);
         }
-        if (in_array($word->lower(), ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"])
+        if (in_array($word1, ["yle"]) && strpos($word2, "areena") === 0) {
+            return Word::append($word->setUcFirst(), " ", $other->setUcFirst());
+        }
+
+        if (in_array($word1, ["etelä", "itä", "länsi", "pohjois", "kanta", "varsinais"])
             && in_array($other->wClass, ["paikannimi", "nimisana"])) {
-            return ["DOUBLE-UPPER", "DASH"];
+            return Word::append($word->setUcFirst(), "-", $other->setUcFirst(), $other->wClass);
         }
-      
+
         // sijapääte fix
-        if (in_array($word2, 
-                     [
-                       "sta", "lle", "lla", "kin", "han", "loinen", "laisista", 
-                      "uksia", "täminen", "mme", "ään", "akaan", "vät", "hun", 
-                       "ville", // if previous word ends to vowel?
-                       "na", "kaan", "n", "set", "a", "llä", 
-                     ])
-           ) {
-            return ["TRUE"];
+        if (in_array($word2,
+            [
+                "sta", "lle", "lla", "kin", "han", "loinen", "laisista",
+                "uksia", "täminen", "mme", "ään", "akaan", "vät", "hun",
+                "ville", // if previous word ends to vowel?
+                "na", "kaan", "n", "set", "a", "llä",
+            ])
+        ) {
+            return Word::append($word->trim(), "", $other, $word->wClass);
         }
-    
+
         if (
             (
                 in_array($other->baseform, ["vuotias", "luku"]) ||
                 in_array($other->word, ["vuotiaita", "vuotiaat", "vuotiaasta", "vuotias"])
             )
             && $word->wClass == "lukusana") {
-            return ["DASH"];
+            return Word::append($word, "-", $other, $other->wClass);
         }
         if (in_array($other->baseform, ["luokka"]) && $word->wClass == "lukusana") {
-            return ["DOT"];
+            return Word::append($word, ".", $other);
         }
         if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
-            return ["TRUE"];
+            return Word::append($word, "", $other);
         }
-    
+
         if ($word->word === $other->word && $word->wClass !== "lukusana") {
-            return ["REMOVE"];
+            return Word::append($word, "", new Word(""));
         }
 
         // compare lower cases, return what is found on baseforms
         if (!empty($word->baseform) && !empty($other->baseform)) {
             $baseLower = mb_strtolower($other->baseform);
             if (isset($baseforms[$word1.$baseLower])) {
-                return $baseforms[$word1.$baseLower];
+                return self::buildFromWord($word, $other, $baseforms[$word1.$baseLower]);
             } else if (isset($baseforms[$word1 . "-" . $baseLower])) {
-                return $baseforms[$word1 . "-" . $baseLower];
+                return self::buildFromWord($word, $other, $baseforms[$word1 . "-" . $baseLower]);
             }
         }
 
         if ($other !== null) {
             if (isset($baseforms[$word1.$word2])) {
-                return $baseforms[$word1.$word2];
+                return self::buildFromWord($word, $other, $baseforms[$word1.$word2]);
             } else if (isset($baseforms[$word1 . "-" . $word2])) {
-                return $baseforms[$word1 . "-" . $word2];
+                return self::buildFromWord($word, $other, $baseforms[$word1."-".$word2]);
             }
         }
-        return [];
+        return $word;
     }
 
     public static function azureFixes(Word $word, $other): ?string
@@ -112,6 +103,25 @@ class CompoundWord
             return self::FIXUS[$word->word][$other->baseform];
         }
         return null;
+    }
+
+    private static function buildFromWord(Word $word, Word $other, string $k): Word
+    {
+        $separator = "";
+        $hasDash = explode("-", $k);
+        $firstUpper = self::startsWithUpper($hasDash[0]);
+        if (count($hasDash) > 1) {
+            $separator = "-";
+            $secondUpper = self::startsWithUpper($hasDash[1]);
+        } else {
+            $secondUpper = false;
+        }
+        if ($firstUpper && $secondUpper) {
+            return Word::append($word->setUcFirst(), $separator, $other->setUcFirst());
+        } else if ($firstUpper) {
+            return Word::append($word->setUcFirst(), $separator, $other->setStrLower());
+        }
+        return Word::append($word, $separator, $other->setStrLower());
     }
  
     /**
@@ -128,21 +138,7 @@ class CompoundWord
             $c = file_get_contents($fileName);
             $values = explode("\n", $c);
             foreach ($values as $k) {
-                $hasDash = explode("-", $k);
-                $firstUpper = self::startsWithUpper($hasDash[0]);
-                if (count($hasDash) > 1) {
-                    $wRes = ["DASH"];
-                    $secondUpper = self::startsWithUpper($hasDash[1]);
-                } else {
-                    $wRes = ["TRUE"];
-                    $secondUpper = false;
-                }
-                if ($firstUpper && $secondUpper) {
-                    $wRes[] = "DOUBLE-UPPER";
-                } else if ($firstUpper) {
-                    $wRes[] = "UPPER";
-                }
-                $result[mb_strtolower($k, "UTF-8")] = $wRes;
+                $result[mb_strtolower($k, "UTF-8")] = $k;
             }
         }
         return $result;
