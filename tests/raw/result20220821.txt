@@ -1,0 +1,1 @@
+Unexpected java.io.FileNotFoundException: /home/pi/bots/kansanradio/data/latest.wav (No such file or directory)
