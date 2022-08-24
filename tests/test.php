@@ -7,13 +7,16 @@ use Kansanradio\Builder;
 
 $baseFormArray = CompoundWord::buildCompoundWordArray("../resources/yhdyssanat.txt");
 
-$numberOfLogs = 40;
+$dir_handle = opendir("./input/");
 
-for ($i = 1;$i <= $numberOfLogs;$i++) {
-  if (file_exists("./input/log" . $i)) { 
-    $result = Builder::buildResult("./input/log" . $i, $baseFormArray);
-    file_put_contents("./output/result" . $i . ".txt", $result);
-    print $i . PHP_EOL;
-  }
+// reading the contents of the directory
+while(($fileName = readdir($dir_handle)) !== false)
+{
+    if (!in_array($fileName, [".", ".."])) {
+        $output = str_replace("log", "result", $fileName) . ".txt";
+        $result = Builder::buildResult("./input/" . $fileName, $baseFormArray);
+        file_put_contents("./output/" . $output, $result);
+        print $fileName . " > " . $output . PHP_EOL;
+    }
 }
 
