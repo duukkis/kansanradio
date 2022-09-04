@@ -6,6 +6,11 @@ source .env
 yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode --showmetadata > ./data/episode.json
 # Download latest
 yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode -o ./data/latest.mp3
+
+if [ ! -f "./data/latest.mp3" ]; then
+    exit 0
+fi
+
 # Convert to wav and remove the 16s intro
 ffmpeg -i ./data/latest.mp3 -ss 16 -ar 16000 -ac 1 ./data/latest.wav
 rm ./data/latest.mp3
