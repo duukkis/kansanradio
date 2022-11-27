@@ -1,11 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 # get keys
-source .env
+. ./.env
+# for the fun of it
+# wget https://areena.yle.fi/audio/1-2143312 > dump
 
 #metadata into episode.json
-yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode --showmetadata > ./data/episode.json
+yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode --showmetadata > ./data/episode.json
 # Download latest
-yle-dl https://areena.yle.fi/audio/1-2143312 --latestepisode -o ./data/latest.mp3
+yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode -o ./data/latest.mp3
 
 if [ ! -f "./data/latest.mp3" ]; then
     exit 0
