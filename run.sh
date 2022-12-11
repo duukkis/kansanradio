@@ -5,9 +5,9 @@
 # wget https://areena.yle.fi/audio/1-2143312 > dump
 
 #metadata into episode.json
-yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode --showmetadata > ./data/episode.json
+/home/pi/.local/bin/yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode --showmetadata > ./data/episode.json
 # Download latest
-yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode -o ./data/latest.mp3
+/home/pi/.local/bin/yle-dl "https://areena.yle.fi/audio/1-2143312" --latestepisode -o ./data/latest.mp3
 
 if [ ! -f "./data/latest.mp3" ]; then
     exit 0
