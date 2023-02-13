@@ -21,7 +21,7 @@ mv ./data/fixed.wav ./data/latest.wav
 
 # Sound to text from azure
 cd java
-java -Dkey=$AZURE_KEY -Dzone=$AZURE_ZONE -Dfile=/home/pi/bots/kansanradio/data/latest.wav -jar ./target/SpeechSDKDemo-0.0.1-SNAPSHOT-jar-with-dependencies.jar > /home/pi/bots/kansanradio/data/result.txt
+java -Dfile.encoding=UTF-8 -Dkey=$AZURE_KEY -Dzone=$AZURE_ZONE -Dfile=/home/pi/bots/kansanradio/data/latest.wav -jar ./target/SpeechSDKDemo-0.0.1-SNAPSHOT-jar-with-dependencies.jar > /home/pi/bots/kansanradio/data/result.txt
 cd ..
 # Run voikko for text
 python3 voikko.py > ./data/log
