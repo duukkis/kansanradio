@@ -19,7 +19,7 @@ class CompoundWord
       "enter" => ["bakteeri" => "enterobakteeri"],
     ];
 
-    public static function makeCompound(Word $word, Word $other, array $baseforms): Word
+    public static function makeCompound(Word $word, ?Word $other, array $baseforms): Word
     {
         if (is_null($other)) {
             return $word;
