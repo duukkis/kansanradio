@@ -31,6 +31,9 @@ php finish.php
 # todo copy by date the middle results
 cp data/result.txt tests/raw/result`date +"%Y%m%d"`.txt
 cp data/log tests/input/log`date +"%Y%m%d"`
+cd tests/
+php test.php
+cd ..
 git add tests/
 git commit -m "`date +"%Y%m%d"`" tests/
 git push origin main
