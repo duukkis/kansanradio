@@ -1,7 +1,7 @@
 {
     "name": "kansan/radio",
     "require": {
-        "php": "7.*",
+        "php": "8.*",
         "abraham/twitteroauth": "^4.0"
     },
     "authors": [
