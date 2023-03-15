@@ -19,15 +19,19 @@ class Builder
         $noPeriodAfter = ["ja", "että"];
         $c = file_get_contents($fileName);
         $p = explode("\n", $c);
-        $next = null;
-        $lowerCaseNext = false;
+
+        // ------------------------------------ build word array
+        /** @var array<int,Word> $words */
         $words = [];
-        for ($i = 0;$i < count($p);$i++) {
+        for ($i = 0; $i < count($p); $i++) {
             $words[] = self::buildWordFromLine($p[$i]);
         }
 
-
-        for ($i = 0;$i < count($words);$i++) {
+        // ------------------------------------ compound words commas fixes
+        $next = null;
+        $lowerCaseNext = false;
+        for ($i = 0; $i < count($words); $i++) {
+            /** @var Word $word */
             $word = $words[$i];
             if ($lowerCaseNext) {
                 $word->setStrLower();
@@ -35,6 +39,7 @@ class Builder
             }
             // get next word for possible pilkku and for compound word
             if (isset($words[$i + 1])) {
+                /** @var ?Word $word */
                 $next = $words[$i + 1];
             }
 
@@ -48,6 +53,8 @@ class Builder
                 $i++;
             } else {
                 $word = CompoundWord::makeCompound($word, $next, $baseFormArray);
+                // if a new word is formed, remove the next and redo for more compound
+                // g 7 maat >> G7 maat >> G7-maat
                 if ($word->isCompound) {
                     // set false on the other round
                     $word->isCompound = false;
@@ -62,7 +69,7 @@ class Builder
             if ($word->isCapital() && !$word->isCompound) {
                 $word->setUcFirst();
             }
-            $lastLetter = mb_substr($word->word, -1, 1);
+            // if next is että, mutta
             if ($word->isLastLetterEndingSentence() && in_array($word->trimmed(), $noPeriodAfter, true)) {
                 $word->trim();
                 // lower case to be sure the next
@@ -70,10 +77,12 @@ class Builder
             }
         }
 
-        for ($i = 0;$i < count($words);$i++) {
+        // ------------------------------------ build the result
+        for ($i = 0; $i < count($words); $i++) {
             /** @var Word $word */
             $word = $words[$i];
             if (isset($words[$i + 1])) {
+                /** @var ?Word $next */
                 $next = $words[$i + 1];
             }
             $result .= $word->word;
@@ -91,6 +100,10 @@ class Builder
   
     private static function cleanUpAans(string $result): string
     {
-        return str_replace(["äää", "aaa", "nice", " pl ", " pl.", "whats app", "Whatsapp"], ["äkää", "akaa", "nais", " PL ", " PL.", "WhatsApp", "WhatsApp"], $result);
+        return str_replace(
+            ["äää", "aaa", "nice", " pl ", " pl.", "whats app", "Whatsapp"],
+            ["äkää", "akaa", "nais", " PL ", " PL.", "WhatsApp", "WhatsApp"],
+            $result
+        );
     }
 }

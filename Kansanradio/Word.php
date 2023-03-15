@@ -44,7 +44,7 @@ class Word
       "venäjä", "ukraina", "nato",
       "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
       "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel",
-      "iltalehti",
+      "iltalehti", "saastamoinen",
     ];
   
     public string $word = "";
