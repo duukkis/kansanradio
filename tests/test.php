@@ -17,6 +17,7 @@ while(($fileName = readdir($dir_handle)) !== false)
         $result = Builder::buildResult("./input/" . $fileName, $baseFormArray);
         file_put_contents("./output/" . $output, $result);
         print $fileName . " > " . $output . PHP_EOL;
+//        die();
     }
 }
 

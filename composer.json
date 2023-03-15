@@ -2,6 +2,7 @@
     "name": "kansan/radio",
     "require": {
         "php": "8.*",
+        "ext-mbstring": "*",
         "abraham/twitteroauth": "^4.0"
     },
     "authors": [

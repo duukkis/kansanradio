@@ -21,22 +21,22 @@ class Builder
         $p = explode("\n", $c);
         $next = null;
         $lowerCaseNext = false;
+        $words = [];
         for ($i = 0;$i < count($p);$i++) {
-            $word = self::buildWordFromLine($p[$i]);
+            $words[] = self::buildWordFromLine($p[$i]);
+        }
+
+
+        for ($i = 0;$i < count($words);$i++) {
+            $word = $words[$i];
             if ($lowerCaseNext) {
                 $word->setStrLower();
                 $lowerCaseNext = false;
             }
             // get next word for possible pilkku and for compound word
-            if (isset($p[$i + 1])) {
-                $next = self::buildWordFromLine($p[$i + 1]);
+            if (isset($words[$i + 1])) {
+                $next = $words[$i + 1];
             }
-            /*    
-EU MTK etc
-            if ($word->baseform == "lyhenne" && mb_strlen($word->word) === mb_strlen($word->baseform)) {
-              $word->word = $word->baseform;
-            }
-*/
 
             $azure = CompoundWord::azureFixes($word, $next);
             if (null !== $azure) {
@@ -49,12 +49,14 @@ EU MTK etc
             } else {
                 $word = CompoundWord::makeCompound($word, $next, $baseFormArray);
                 if ($word->isCompound) {
+                    // set false on the other round
+                    $word->isCompound = false;
+                    $words[$i] = $word;
+                    unset($words[$i+1]);
+                    $words = array_values($words); // 'reindex' array
                     $next = null;
-                    $i++;
+                    $i--;
                 }
-                // move this logic to Compoundword and have it return a new word
-                // add isCompound to Word and if($newword->isCompound) { $i++ }
-                // fix Nato-jäsenyys and Peru Pello
             }
             // capital
             if ($word->isCapital() && !$word->isCompound) {
@@ -66,9 +68,15 @@ EU MTK etc
                 // lower case to be sure the next
                 $lowerCaseNext = true;
             }
+        }
 
+        for ($i = 0;$i < count($words);$i++) {
+            /** @var Word $word */
+            $word = $words[$i];
+            if (isset($words[$i + 1])) {
+                $next = $words[$i + 1];
+            }
             $result .= $word->word;
-
             if ($word->isLastLetterEndingSentence()) {
                 $result .= PHP_EOL;
             } elseif (!$word->isLastLetterComma() && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
@@ -77,6 +85,7 @@ EU MTK etc
                 $result .= " ";
             }
         }
+
         return self::cleanUpAans($result);
     }
   

@@ -321,7 +321,7 @@ Moi.
 Miten minusta rupesi haisemaan nyt oikein pahalle, jos valtio tulisi t?ss?
 s?hk?hammas vastaan niit?
 tavallisia tallaajia alentamalla s?hk?veroa, niin nyth?n se ei k?y kellek??n.
-Ei ei ei tota.
+Ei ei tota.
 Haetaanko t?ss?
 nyt sill?
 tavalla, ett?
@@ -525,7 +525,7 @@ tehd?, ett?
 niin sitten m?
 kysyin, ett?
 no voinko m?
-soittaa tonne 1 1 2 niin n?in antaisi luvan ja osan ehk?
+soittaa tonne 112 niin n?in antaisi luvan ja osan ehk?
 muutenkin pit?nyt soittaa, niin sielt?
 on sitten antavat meille ohjeita, ett?
 osoittakaa siin?
@@ -756,7 +756,7 @@ voi l?hett??
 numeroon.
 0445515464 s?hk?postiosoite on kansan piste Radio at, Yle piste fi ja kirjeit?
 ja kortteja voi l?hett??
-osoitteella Kansanradio PL seitsem?nkymment?yhdeks?n 0 0 0 2 4 yleisradio ja viel?
+osoitteella Kansanradio PL seitsem?nkymment?yhdeks?n 00024 yleisradio ja viel?
 l?hetyksen loppuun t?rke?
 muistutus.
 No hei, t?ss?

@@ -66,6 +66,16 @@ class CompoundWord
         if (in_array($other->word, ["€"]) && $word->wClass == "lukusana") {
             return Word::append($word, "", $other);
         }
+        // append numbers
+        if (
+            is_numeric($word->trimmed()) &&
+            is_numeric($other->trimmed()) &&
+            $word->wClass == "lukusana" &&
+            $other->wClass == "lukusana" &&
+            strlen($other->trimmed()) == 1
+        ) {
+            return Word::append($word, "", $other, "lukusana");
+        }
 
         if ($word->word === $other->word && $word->wClass !== "lukusana") {
             return Word::append($word, "", new Word(""));
@@ -81,12 +91,10 @@ class CompoundWord
             }
         }
 
-        if ($other !== null) {
-            if (isset($baseforms[$word1.$word2])) {
-                return self::buildFromWord($word, $other, $baseforms[$word1.$word2]);
-            } else if (isset($baseforms[$word1 . "-" . $word2])) {
-                return self::buildFromWord($word, $other, $baseforms[$word1."-".$word2]);
-            }
+        if (isset($baseforms[$word1.$word2])) {
+            return self::buildFromWord($word, $other, $baseforms[$word1.$word2]);
+        } else if (isset($baseforms[$word1 . "-" . $word2])) {
+            return self::buildFromWord($word, $other, $baseforms[$word1."-".$word2]);
         }
         return $word;
     }
