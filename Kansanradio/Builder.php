@@ -51,7 +51,9 @@ class Builder
                 if ($firstLetterCapital) {
                   $word->setUcFirst();
                 }
-                $i++;
+                $words[$i] = $word;
+                unset($words[$i+1]);
+                $words = array_values($words);
             } else {
                 $word = CompoundWord::makeCompound($word, $next, $baseFormArray);
                 // if a new word is formed, remove the next and redo for more compound
