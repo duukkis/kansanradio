@@ -15,8 +15,9 @@ class Builder
     public static function buildResult(string $fileName, array $baseFormArray): string
     {
         $result = "";
-        $pilkku = ["koska", "että", "mutta"];
-        $noPeriodAfter = ["ja", "että"];
+        // not kuin >> muuta kuin, ennen kuin
+        $commaWords = ["mutta", "että", "jotta", "koska", "kunnes", "jos", "vaikka", "jollei", "ellei", "kunhan", "joskin"];
+        $noPeriodAfter = array_merge($commaWords, ["ja"]);
         $c = file_get_contents($fileName);
         $p = explode("\n", $c);
 
@@ -78,17 +79,23 @@ class Builder
         }
 
         // ------------------------------------ build the result
+        ;
+
         for ($i = 0; $i < count($words); $i++) {
             /** @var Word $word */
             $word = $words[$i];
-            if (isset($words[$i + 1])) {
-                /** @var ?Word $next */
-                $next = $words[$i + 1];
-            }
+            /** @var ?Word $next */
+            $next = (isset($words[$i + 1])) ? $words[$i + 1] : null;
+
             $result .= $word->word;
             if ($word->isLastLetterEndingSentence()) {
                 $result .= PHP_EOL;
-            } elseif (!$word->isLastLetterComma() && $next !== null && in_array($next->trimmed(), $pilkku, true)) {
+            } elseif (
+                !$word->isLastLetterComma() &&
+                $next !== null &&
+                in_array($next->trimmed(), $commaWords, true) &&
+                !($word->wClass == $next->wClass && $word->wClass == "sidesana") // että mutta, että jos, etc.
+            ) {
                 $result .= ", ";
             } else {
                 $result .= " ";

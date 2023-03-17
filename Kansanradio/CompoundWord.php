@@ -17,6 +17,7 @@ class CompoundWord
       "yksi" => ["valtias" => "yksinvaltias"],
       "tammi" => ["meihin" => "tamineihin"],
       "enter" => ["bakteeri" => "enterobakteeri"],
+      "oli" => ["vedeltä" => "Orivedeltä"],
     ];
 
     public static function makeCompound(Word $word, ?Word $other, array $baseforms): Word

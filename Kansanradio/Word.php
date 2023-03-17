@@ -7,6 +7,7 @@ class Word
       "boot" => "puut",
       "boozt" => "suusta",
       "tojota" => "Toyota",
+      "VC" => "WC",
     ];
     const UPPERCLASSES = ["etunimi", "sukunimi", "paikannimi", "nimi"];
     // what voikko thinks is nimi but is not
@@ -26,9 +27,9 @@ class Word
     "Janna", // todo >> jännä
     "Kallinen", "Koski", "Kaste", "Kai", "Kivinen", "Kallio", "Koivu", 
     "Laina", "Lahja", 
-    "Maa", "Mona", "Meri", "Marja", "Murto", "Mersu",
+    "Maa", "Mona", "Meri", "Marja", "Murto", "Mersu", "Mantere",
     "Osta", "Oman",
-    "Pello", "Pohja", "Päivi", "Päivä", "Pelli", 
+    "Pello", "Pohja", "Päivi", "Päivä", "Pelli", "Pyry",
     "Ranta", "Riski", "Rinna", "Ruusu", 
     "Säde", "Sikiö",
     "Tula",
