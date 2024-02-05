@@ -3,16 +3,19 @@ namespace Kansanradio;
 
 class Builder
 {
-    private static function buildWordFromLine($line): Word
+    private static function buildWordFromLine($line, array $replacer): Word
     {
         $ps = explode(" ", $line);
         $sana = $ps[0];
+        if (isset($replacer[$sana])) {
+            $sana = $replacer[$sana];
+        }
         $baseform = isset($ps[1]) ? $ps[1] : null;
         $wClass = isset($ps[2]) ? $ps[2] : null;
         return new Word($sana, $baseform, $wClass);
     }
 
-    public static function buildResult(string $fileName, array $baseFormArray): string
+    public static function buildResult(string $fileName, array $baseFormArray, array $replacer = []): string
     {
         $result = "";
         // not kuin >> muuta kuin, ennen kuin
@@ -25,7 +28,7 @@ class Builder
         /** @var array<int,Word> $words */
         $words = [];
         for ($i = 0; $i < count($p); $i++) {
-            $words[] = self::buildWordFromLine($p[$i]);
+            $words[] = self::buildWordFromLine($p[$i], $replacer);
         }
 
         // ------------------------------------ compound words commas fixes

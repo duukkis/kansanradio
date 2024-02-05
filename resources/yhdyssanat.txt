@@ -181514,7 +181514,6 @@ tervehtimistapa
 tervejärkinen
 tervemeno
 tervepää
-terveterve
 tervetuliainen
 tervetuliaisherkku
 tervetuliaisjuhla

@@ -39,13 +39,14 @@ class Word
     ];
     // what voikko thinks is not nimi but is (replace this with list)
     const DEFUPPERS = [
-      "kansanradio", "ruotsi", "alppiharju",
-      "turku", "skanska", "tikkakoski", "alppiharju", 
-      "yit", "suomia", "haapakangas", "haikala", 
-      "venäjä", "ukraina", "nato",
-      "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
-      "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel",
-      "iltalehti", "saastamoinen",
+        "kansanradio", "ruotsi", "alppiharju",
+        "turku", "skanska", "tikkakoski", "alppiharju",
+        "yit", "suomia", "haapakangas", "haikala",
+        "venäjä", "ukraina", "nato",
+        "ranska", "jukka", "aamulehti", "nordea", "nordean", "nordeaan", "nordealla",
+        "hakaniemi", "paasikivi", "selander", "viaplay", "wille", "merkel",
+        "iltalehti", "saastamoinen",
+        "frederik"
     ];
   
     public string $word = "";
@@ -153,5 +154,19 @@ class Word
             $wClass,
             true
         );
+    }
+
+    public static function buildReplacerFromFile(string $fileName, string $separator = ";"): array
+    {
+        $result = [];
+        $c = file_get_contents($fileName);
+        $p = explode("\n", $c);
+        foreach ($p as $line) {
+            $parts = explode($separator, $line);
+            if (count($parts) == 2) {
+                $result[trim($parts[0])] = trim($parts[1]);
+            }
+        }
+        return $result;
     }
 }
