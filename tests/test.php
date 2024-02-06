@@ -15,7 +15,7 @@ while(($fileName = readdir($dir_handle)) !== false)
 {
     if (!in_array($fileName, [".", ".."])) {
         $output = str_replace("log", "result", $fileName) . ".txt";
-        $result = Builder::buildResult("./input/" . $fileName, $baseFormArray, $replacer);
+        $result = Builder::buildResult("./input/" . $fileName, $baseFormArray, []);
         file_put_contents("./output/" . $output, $result);
         print $fileName . " > " . $output . PHP_EOL;
 //        die();

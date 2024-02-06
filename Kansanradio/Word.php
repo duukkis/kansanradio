@@ -8,6 +8,7 @@ class Word
       "boozt" => "suusta",
       "tojota" => "Toyota",
       "VC" => "WC",
+      "VRN" => "VR:n",
     ];
     const UPPERCLASSES = ["etunimi", "sukunimi", "paikannimi", "nimi"];
     // what voikko thinks is nimi but is not
