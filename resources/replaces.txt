@@ -1,12 +1,14 @@
-mä;minä
-sä;sinä
-niinku;niin kuin
-mun;minun
-sun;sinun
-sulta;sinulta
-mulla;minulla
-tota;tuota
-tää;tämä
-tossa;tuossa
-jopakin;jopa
-ylleensä;yleensä
+mä=minä
+sä=sinä
+niinku=niin kuin
+mun=minun
+sun=sinun
+sulta=sinulta
+mulla=minulla
+tota=tuota
+tää=tämä
+nää=nämä
+tossa=tuossa
+jopakin=jopa
+ylleensä=yleensä
+purnaauttavaa=purnauttavaa
