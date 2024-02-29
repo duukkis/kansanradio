@@ -218982,4 +218982,6 @@ Vihreä liitto
 AY-liike
 IC-vaunu
 Päijät-Häme
+Päijät-häme
+Etelä-Helsinki
 vaali-ilta
